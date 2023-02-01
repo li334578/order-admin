@@ -2,6 +2,7 @@ package com.example.order_admin_java.pojo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 /**
@@ -11,6 +12,7 @@ import lombok.Data;
  * @Author liwenbo
  */
 @Data
+@TableName("tb_customer")
 public class Customer {
     /**
      * 自增id

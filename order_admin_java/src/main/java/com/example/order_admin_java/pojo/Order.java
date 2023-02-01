@@ -3,6 +3,7 @@ package com.example.order_admin_java.pojo;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.example.order_admin_java.dto.PageBean;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -20,6 +21,7 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
+@TableName("tb_order")
 public class Order extends PageBean<Order> {
     /**
      * 自增id
