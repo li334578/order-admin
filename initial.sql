@@ -47,3 +47,5 @@ create table tb_goods
     production_process      varchar(200) comment '生产流程',
     order_id                bigint comment '关联订单id'
 ) comment '货物清单表';
+
+insert into tb_customer(customer_name, customer_phone, customer_address) value ('张三','18888888888','上海市');
