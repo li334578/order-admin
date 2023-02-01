@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
  * @Version 1.0.0
  * @Author liwenbo
  */
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @Date 31/1/2023 0031 下午 4:46
- * @Description TODO
+ * @Description 客户mapper
  * @Version 1.0.0
  * @Author liwenbo
  */

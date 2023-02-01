@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.example.order_admin_java.dto.PageBean;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -18,6 +19,7 @@ import java.util.List;
  * @Author liwenbo
  */
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class Order extends PageBean<Order> {
     /**
      * 自增id

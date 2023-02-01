@@ -7,7 +7,7 @@ import java.util.Collection;
 
 /**
  * @Date 31/1/2023 0031 下午 5:00
- * @Description TODO
+ * @Description 分页工具父类
  * @Version 1.0.0
  * @Author liwenbo
  */

@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 /**
  * @Date 31/1/2023 0031 下午 4:32
- * @Description 商品
+ * @Description 商品实体
  * @Version 1.0.0
  * @Author liwenbo
  */
