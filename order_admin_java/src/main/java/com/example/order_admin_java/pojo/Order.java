@@ -9,6 +9,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Date 31/1/2023 0031 下午 3:03
@@ -90,4 +91,10 @@ public class Order extends PageBean<Order> {
      * 是否发货
      */
     private Boolean sendStatus;
+
+    /**
+     * 货物清单
+     */
+    @TableField(exist = false)
+    private List<Goods> goodsList;
 }

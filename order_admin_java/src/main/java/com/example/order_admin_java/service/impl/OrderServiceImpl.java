@@ -7,7 +7,9 @@ import com.example.order_admin_java.pojo.Order;
 import com.example.order_admin_java.service.OrderService;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -18,6 +20,9 @@ import java.util.Objects;
  */
 @Service
 public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements OrderService {
+
+    @Resource
+    private OrderMapper orderMapper;
     /**
      * 根据条件查询订单信息
      */
@@ -54,5 +59,13 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     public Integer countByCondition(Order order) {
         QueryWrapper<Order> queryWrapper = buildOrderQueryWrapper(order);
         return this.count(queryWrapper);
+    }
+
+    /**
+     * 根据订单号左匹配
+     */
+    @Override
+    public List<Order> getListByOrderNumberLeftMatching(String orderNumber) {
+        return orderMapper.getListByOrderNumberLeftMatching(orderNumber);
     }
 }
