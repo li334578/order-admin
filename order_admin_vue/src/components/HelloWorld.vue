@@ -52,7 +52,99 @@
       </el-option>
     </el-select>
     <br/>
-    <el-button primary @click="addOrder()">新增</el-button>
+    <el-table
+        :data="orderInfo.goodsList"
+        border stripe
+        style="width: 100%">
+      <el-table-column
+          type="index">
+      </el-table-column>
+
+      <el-table-column
+          prop="goodsName"
+          label="产品名称"
+          width="180">
+        <template slot-scope="scope">
+          <el-input :value="scope.row.goodsName" @input="saveGoods($event,scope.row,'goodsName')"/>
+        </template>
+      </el-table-column>
+
+      <el-table-column
+          prop="goodsWidth"
+          label="宽度 mm"
+          width="180">
+        <template slot-scope="scope">
+          <el-input-number :value="scope.row.goodsWidth" @input="saveGoods($event,scope.row,'goodsWidth')"/>
+        </template>
+      </el-table-column>
+      <el-table-column
+          prop="goodsLength"
+          label="长度 mm">
+        <template slot-scope="scope">
+          <el-input-number :value="scope.row.goodsLength" @input="saveGoods($event,scope.row,'goodsLength')"/>
+        </template>
+      </el-table-column>
+      <el-table-column
+          prop="total"
+          label="数量">
+        <template slot-scope="scope">
+          <el-input :value="scope.row.total" @input="saveGoods($event,scope.row,'total')"/>
+        </template>
+      </el-table-column>
+      <el-table-column
+          prop="area"
+          label="面积(m²)">
+        <template slot-scope="scope">
+          <el-input-number :value="scope.row.area" @input="saveGoods($event,scope.row,'area')"/>
+        </template>
+      </el-table-column>
+      <el-table-column
+          prop="goodsPrice"
+          label="单价">
+        <template slot-scope="scope">
+          <el-input-number :value="scope.row.goodsPrice" @input="saveGoods($event,scope.row,'goodsPrice')"/>
+        </template>
+      </el-table-column>
+      <el-table-column
+          prop="processingRequirements"
+          label="加工需求">
+        <template slot-scope="scope">
+          <el-input :value="scope.row.processingRequirements"
+                    @input="saveGoods($event,scope.row,'processingRequirements')"/>
+        </template>
+      </el-table-column>
+      <el-table-column
+          prop="processingExpenses"
+          label="加工费用">
+        <template slot-scope="scope">
+          <el-input-number :value="scope.row.processingExpenses" @input="saveGoods($event,scope.row,'processingExpenses')"/>
+        </template>
+      </el-table-column>
+      <el-table-column
+          prop="totalMoney"
+          label="总金额">
+        <template slot-scope="scope">
+          <el-input-number :value="scope.row.totalMoney" @input="saveGoods($event,scope.row,'totalMoney')"/>
+        </template>
+      </el-table-column>
+      <el-table-column
+          prop="remark"
+          label="备注">
+        <template slot-scope="scope">
+          <el-input :value="scope.row.remark" @input="saveGoods($event,scope.row,'remark')"/>
+        </template>
+      </el-table-column>
+      <el-table-column
+          prop="productionProcess"
+          label="生产流程">
+        <template slot-scope="scope">
+          <el-input :value="scope.row.productionProcess" @input="saveGoods($event,scope.row,'productionProcess')"/>
+        </template>
+      </el-table-column>
+    </el-table>
+    <el-button primary @click="addRow(1)">加一行</el-button>
+    <el-button primary @click="addRow(5)">加五行</el-button>
+    <el-button primary @click="addOrder()">提交订单</el-button>
   </div>
 </template>
 
@@ -105,6 +197,23 @@ export default {
   },
   created() {
     this.getCustomerList()
+    for (let i = 0; i < 4; i++) {
+      this.orderInfo.goodsList.push(
+          {
+            fid: i,
+            goodsName: null,
+            goodsWidth: null,
+            goodsLength: null,
+            total: null,
+            area: null,
+            goodsPrice: null,
+            processingRequirements: null,
+            processingExpenses: null,
+            totalMoney: null,
+            remark: null,
+            productionProcess: null,
+          })
+    }
   },
   methods: {
     getCustomerList() {
@@ -123,7 +232,37 @@ export default {
     },
     addOrder() {
       console.log(this.orderInfo)
+      // 写入goodsList属性
+      this.orderInfo.goodsList = this.orderInfo.goodsList.filter(item => item)
       // this.$post('/order/add',this.orderInfo)
+    },
+    saveGoods(e, rowData, properties) {
+      console.log(rowData)
+      this.orderInfo.goodsList[rowData.fid][properties] = e
+      this.$forceUpdate()
+    },
+    addRow(num) {
+      let maxFid = Math.max.apply(Math, this.orderInfo.goodsList.map(item => item.fid))
+      for (let i = 1; i <= num; i++) {
+        maxFid++
+        // 拿到最大的fid
+        this.orderInfo.goodsList.push(
+            {
+              fid: maxFid,
+              goodsName: null,
+              goodsWidth: null,
+              goodsLength: null,
+              total: null,
+              area: null,
+              goodsPrice: null,
+              processingRequirements: null,
+              processingExpenses: null,
+              totalMoney: null,
+              remark: null,
+              productionProcess: null,
+            }
+        )
+      }
     }
   }
 }
