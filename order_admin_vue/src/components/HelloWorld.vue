@@ -102,101 +102,105 @@
         border stripe
         style="width: 100%">
       <el-table-column
+          fixed
           type="index">
       </el-table-column>
 
       <el-table-column
           prop="goodsName"
           label="产品名称"
-          width="180">
-        <template slot-scope="scope">
+          fixed
+          width="220">
+        <template v-slot="scope">
           <el-input :value="scope.row.goodsName" @input="saveGoods($event,scope.row,'goodsName')"/>
         </template>
       </el-table-column>
 
       <el-table-column
           prop="goodsWidth"
+          sortable
           label="宽度 mm"
-          width="180">
-        <template slot-scope="scope">
+          width="201">
+        <template v-slot="scope">
           <el-input-number :value="scope.row.goodsWidth" @input="saveGoods($event,scope.row,'goodsWidth')"/>
         </template>
       </el-table-column>
       <el-table-column
           prop="goodsLength"
-          label="长度 mm">
-        <template slot-scope="scope">
+          label="长度 mm"
+          width="201">
+        <template v-slot="scope">
           <el-input-number :value="scope.row.goodsLength" @input="saveGoods($event,scope.row,'goodsLength')"/>
         </template>
       </el-table-column>
       <el-table-column
           prop="total"
-          label="数量">
-        <template slot-scope="scope">
+          label="数量"
+          width="150">
+        <template v-slot="scope">
           <el-input :value="scope.row.total" @input="saveGoods($event,scope.row,'total')"/>
         </template>
       </el-table-column>
       <el-table-column
           prop="area"
-          label="面积(m²)">
-        <template slot-scope="scope">
+          sortable
+          label="面积(m²)"
+          width="201">
+        <template v-slot="scope">
           <el-input-number :value="scope.row.area" @input="saveGoods($event,scope.row,'area')"/>
         </template>
       </el-table-column>
       <el-table-column
           prop="goodsPrice"
-          label="单价">
-        <template slot-scope="scope">
+          label="单价"
+          width="201">
+        <template v-slot="scope">
           <el-input-number :value="scope.row.goodsPrice" @input="saveGoods($event,scope.row,'goodsPrice')"/>
         </template>
       </el-table-column>
       <el-table-column
           prop="processingRequirements"
-          label="加工需求">
-        <template slot-scope="scope">
+          label="加工需求"
+          width="220">
+        <template v-slot="scope">
           <el-input :value="scope.row.processingRequirements"
                     @input="saveGoods($event,scope.row,'processingRequirements')"/>
         </template>
       </el-table-column>
       <el-table-column
           prop="processingExpenses"
-          label="加工费用">
-        <template slot-scope="scope">
+          label="加工费用"
+          width="201">
+        <template v-slot="scope">
           <el-input-number :value="scope.row.processingExpenses"
                            @input="saveGoods($event,scope.row,'processingExpenses')"/>
         </template>
       </el-table-column>
       <el-table-column
           prop="totalMoney"
-          label="总金额">
-        <template slot-scope="scope">
+          label="总金额"
+          width="201">
+        <template v-slot="scope">
           <el-input-number :value="scope.row.totalMoney" @input="saveGoods($event,scope.row,'totalMoney')"/>
         </template>
       </el-table-column>
       <el-table-column
           prop="remark"
-          label="备注">
-        <template slot-scope="scope">
+          label="备注"
+          width="220">
+        <template v-slot="scope">
           <el-input :value="scope.row.remark" @input="saveGoods($event,scope.row,'remark')"/>
         </template>
       </el-table-column>
       <el-table-column
           prop="productionProcess"
-          label="生产流程">
-        <template slot-scope="scope">
+          label="生产流程"
+          width="220">
+        <template v-slot="scope">
           <el-input :value="scope.row.productionProcess" @input="saveGoods($event,scope.row,'productionProcess')"/>
         </template>
       </el-table-column>
     </el-table>
-    排序方式
-    <el-select v-model="orderMethod" @change="orderList()" placeholder="请选择">
-      <el-option
-          v-for="item in options3"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-      </el-option>
-    </el-select>
     <el-button primary @click="addRow(1)">加一行</el-button>
     <el-button primary @click="addRow(3)">加三行</el-button>
     <el-button primary @click="addRow(10)">加十行</el-button>
@@ -247,17 +251,6 @@ export default {
           label: '未发货'
         }
       ],
-      options3: [
-        {
-          value: 1,
-          label: '尺寸排序'
-        },
-        {
-          value: 2,
-          label: '宽排序'
-        }
-      ],
-      orderMethod: null,
     };
   },
   props: {
@@ -329,14 +322,6 @@ export default {
               productionProcess: null,
             }
         )
-      }
-    },
-    orderList() {
-      if (this.orderMethod === 1) {
-        this.orderInfo.goodsList = this.orderInfo.goodsList.sort((a, b) => a.area - b.area)
-      }
-      if (this.orderMethod === 2) {
-        this.orderInfo.goodsList = this.orderInfo.goodsList.sort((a, b) => a.goodsWidth - b.goodsWidth)
       }
     }
   }
