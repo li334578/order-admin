@@ -200,6 +200,18 @@
           <el-input :value="scope.row.productionProcess" @input="saveGoods($event,scope.row,'productionProcess')"/>
         </template>
       </el-table-column>
+      <el-table-column
+          fixed="right"
+          label="操作列"
+          width="80">
+        <template v-slot="scope">
+          <el-button
+              size="mini"
+              type="danger"
+              @click="handleDelete(scope.$index)">删除
+          </el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <el-button primary @click="addRow(1)">加一行</el-button>
     <el-button primary @click="addRow(3)">加三行</el-button>
@@ -323,6 +335,9 @@ export default {
             }
         )
       }
+    },
+    handleDelete(index) {
+      this.orderInfo.goodsList.splice(index, 1)
     }
   }
 }
