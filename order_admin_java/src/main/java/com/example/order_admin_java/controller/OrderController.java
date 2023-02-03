@@ -1,5 +1,6 @@
 package com.example.order_admin_java.controller;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.NumberUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.order_admin_java.dto.RespBean;
@@ -17,10 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,10 +50,10 @@ public class OrderController {
         if (Objects.isNull(order.getCustomerId())) {
             // 根据客户姓名和手机号查询客户是否存在
             QueryWrapper<Customer> queryWrapper = new QueryWrapper<>();
-            queryWrapper.eq("customer_name",order.getCustomerName());
-            queryWrapper.eq("customer_phone",order.getCustomerPhone());
+            queryWrapper.eq("customer_name", order.getCustomerName());
+            queryWrapper.eq("customer_phone", order.getCustomerPhone());
             Customer customer = customerService.getOne(queryWrapper);
-            if (Objects.isNull(customer)){
+            if (Objects.isNull(customer)) {
                 // 保存下客户
                 customer = new Customer();
                 customer.setCustomerName(order.getCustomerName());
@@ -138,6 +136,10 @@ public class OrderController {
     @PostMapping("/updateOrder")
     public RespBean<Void> updateOrder(@RequestBody Order order) {
         orderService.updateById(order);
+        if (CollUtil.isNotEmpty(order.getDelGoodsIdList())) {
+            goodsService.removeByIds(order.getDelGoodsIdList());
+        }
+        order.getGoodsList().stream().filter(item -> Objects.isNull(item.getId())).forEach(item -> item.setOrderId(order.getId()));
         goodsService.saveOrUpdateBatch(order.getGoodsList());
         return RespBean.success();
     }

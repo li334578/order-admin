@@ -94,7 +94,6 @@ export function get(url, data = {}) {
             .get(hosturl+url, data)
             .then(response => {
                 resolve(response)
-                console.log(response)
                     // openLoading != 'open' ? openWin('clockV') : ''
             })
             .catch(error => {

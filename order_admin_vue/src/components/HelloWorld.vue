@@ -95,8 +95,6 @@
         </div>
       </el-col>
     </el-row>
-    <template>
-</template>
     <br/>
     <el-table
         :data="orderInfo.goodsList"
@@ -216,11 +214,11 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-button primary @click="addRow(1)">加一行</el-button>
-    <el-button primary @click="addRow(3)">加三行</el-button>
-    <el-button primary @click="addRow(10)">加十行</el-button>
-    <el-button primary @click="addRow(50)">加五十行</el-button>
-    <el-button primary @click="addOrder()">提交订单</el-button>
+    <el-button @click="addRow(1)">加一行</el-button>
+    <el-button @click="addRow(3)">加三行</el-button>
+    <el-button @click="addRow(10)">加十行</el-button>
+    <el-button @click="addRow(50)">加五十行</el-button>
+    <el-button type="primary" @click="addOrder()">提交订单</el-button>
   </div>
 </template>
 
@@ -293,9 +291,6 @@ export default {
     }
   },
   methods: {
-    handleChange(e) {
-      console.log(e,"kszfldsfds");
-    },
     getCustomerList() {
       // 写get请求
       this.$get('/customer/getCustomerList').then((res) => {
