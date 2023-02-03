@@ -536,7 +536,7 @@ export default {
       if (this.orderList) {
         let result = 0;
         this.orderList.forEach(item => {
-          result += (item.area ? item.area : 0)
+          result += (item.totalArea ? item.totalArea : 0)
         })
         return result;
       }
