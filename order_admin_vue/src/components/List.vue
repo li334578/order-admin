@@ -55,7 +55,7 @@
           </div>
 </el-col>
         <el-col :xs="24" :sm="24" :md="24" :lg="10" class="searchRit">
-          <el-button@click="selectData">查询</el-button>
+          <el-button @click="selectData">查询</el-button>
           <el-button>批量导入</el-button>
           <el-button>生成对账单</el-button>
           <el-button>发货录入</el-button>
@@ -573,6 +573,7 @@ export default {
       this.$post('/order/updateOrder', data).then(() => {
         this.$message.success('修改成功！')
         this.showOrderInfoDialog=false
+        this.getOrderList()
       })
     },
     buildTimeCondition() {
@@ -868,5 +869,5 @@ span {
       background-color: #009688 !important;
     }
   }
-}
+
 </style>
