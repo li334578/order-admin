@@ -3,16 +3,19 @@
     <!-- 卡片视图区域 -->
     <el-card>
       <el-row :gutter="24" class="searchModel">
-        <el-col :span="10" class="searchLet">
-          <span>客户</span>
+        <el-col :xs="24" :sm="24" :md="24" :lg="14" class="searchLet">
+          <div class="changeType">
+            <span>客户</span>
           <el-select v-model="queryInfo.customerId" clearable placeholder="">
-            <el-option
+              <el-option
                 v-for="customer in customerList"
                 :key="customer.id"
                 :label="customer.customerName +'【'+ customer.customerPhone+'】'"
-                :value="customer.id">
-            </el-option>
-          </el-select>
+                :value="customer.id"
+              >
+              </el-option>
+            </el-select>
+          </div>
 
           <div class="timer">
             <span>订单日期</span>
@@ -21,8 +24,8 @@
                 @change="buildTimeCondition"
                 type="daterange"
                 range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期">
+                start-placeholder=""
+                end-placeholder="">
             </el-date-picker>
           </div>
           <div class="isPay">
@@ -32,13 +35,12 @@
                     v-for="item in options1"
                     :key="item.value"
                     :label="item.label"
-                    :value="item.value">
-                </el-option>
+                    :value="item.value"
+                ></el-option>
               </el-select>
           </div>
 
-        </el-col>
-        <el-col :span="14" class="searchRit">
+
           <div class="searchRit_let">
             <span>发货状态</span>
             <el-select v-model="queryInfo.sendStatus" clearable placeholder="">
@@ -46,11 +48,14 @@
                   v-for="item in options2"
                   :key="item.value"
                   :label="item.label"
-                  :value="item.value">
+                  :value="item.value"
+              >
               </el-option>
             </el-select>
           </div>
-          <el-button @click="selectData">查询</el-button>
+</el-col>
+        <el-col :xs="24" :sm="24" :md="24" :lg="10" class="searchRit">
+          <el-button@click="selectData">查询</el-button>
           <el-button>批量导入</el-button>
           <el-button>生成对账单</el-button>
           <el-button>发货录入</el-button>
@@ -83,25 +88,27 @@
         <el-table-column label="总面积" prop="totalArea"></el-table-column>
         <el-table-column label="备注" prop="remark"></el-table-column>
         <el-table-column label="订单号" prop="orderNumber"></el-table-column>
-        <el-table-column label="是否已付款" prop="payStatus">
+        <el-table-column width="100px" label="是否已付款" prop="payStatus">
           <template v-slot="scope">
             <el-switch
                 v-model="scope.row.payStatus"
                 :width="80"
                 active-text="已付款"
                 inactive-text="未付款"
-                @change="updateOrder(scope.row)">
+                @change="updateOrder(scope.row)"
+            >
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column width="200px" label="发货状态" prop="sendStatus">
+        <el-table-column width="100px" label="发货状态" prop="sendStatus">
           <template v-slot="scope">
             <el-switch
                 v-model="scope.row.sendStatus"
                 :width="80"
                 active-text="已发货"
                 inactive-text="未发货"
-                @change="updateOrder(scope.row)">
+                @change="updateOrder(scope.row)"
+            >
             </el-switch>
           </template>
         </el-table-column>
@@ -114,14 +121,21 @@
           <template v-slot="scope">
             <el-button type="primary" size="mini" @click="showDetailInfo(scope.row)">查看/修改</el-button>
             <el-button size="mini" @click="showPrintInfo(scope.row)">打印发布单</el-button>
-            <el-button type="danger" size="mini" @click="removeOrderById(scope.row.id)">删除</el-button>
+            <el-button
+              type="danger"
+              size="mini"
+              @click="removeOrderById(scope.row.id)"
+              >删除</el-button
+            >
           </template>
         </el-table-column>
       </el-table>
 
       <!-- 分页区域 -->
       <el-pagination class="pagination" @size-change="handleSizeChange" @current-change="handleCurrentChange"
-                     :current-page="queryInfo.current" :page-sizes="[5, 10, 15, 20]" :page-size="queryInfo.size"
+                     :current-page="queryInfo.current"
+        :page-sizes="[5, 10, 15, 20]"
+        :page-size="queryInfo.size"
                      layout="total, sizes, prev, pager, next, jumper" :total="total" background>
       </el-pagination>
       <!-- Table -->
@@ -501,7 +515,7 @@ export default {
       orderDetails: {
         goodsList:[]
       }
-    }
+    };
   },
   created() {
     this.getOrderList()
@@ -529,6 +543,7 @@ export default {
       return 0
     }
   },
+  mounted() {},
   methods: {
     getCustomerList() {
       // 写get请求
@@ -565,32 +580,32 @@ export default {
       this.queryInfo.endCreateTime = this.timeRangeCondition[1]
     },
     handleSizeChange(newSize) {
-      this.queryInfo.size = newSize
-      this.getOrderList()
+      this.queryInfo.size = newSize;
+      this.getOrderList();
     },
     handleCurrentChange(newPage) {
-      this.queryInfo.current = newPage
-      this.getOrderList()
+      this.queryInfo.current = newPage;
+      this.getOrderList();
     },
     async removeOrderById(id) {
       const confirmResult = await this.$confirm(
-          '此操作将永久删除该订单, 是否继续?',
-          '提示',
+          "此操作将永久删除该订单, 是否继续?",
+          "提示",
           {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning",
           }
-      ).catch(err => err)
+      ).catch((err) => err);
 
-      if (confirmResult !== 'confirm') {
-        return this.$message.info('已经取消删除！')
+      if (confirmResult !== "confirm") {
+        return this.$message.info("已经取消删除！");
       }
 
-      const {data: res} = await this.$delete(`/order/del/${id}`)
+      const {data: res} = await this.$delete(`/order/del/${id}`);
 
       if (res.meta.status !== 1) {
-        return this.$message.error('删除失败！')
+        return this.$message.error("删除失败！");
       }
 
       this.$message.success('删除成功！')
@@ -659,7 +674,9 @@ export default {
 
 <style lang="less" scoped>
 .orderInquiry {
-
+span {
+    white-space: nowrap;
+  }
   /deep/ .el-card__body {
     padding-top: 0 !important;
   }
@@ -669,82 +686,84 @@ export default {
     padding-bottom: 15px;
     margin-left: -20px !important;
     margin-right: -20px !important;
-    font-size: 12px;
-    background-color: #F2F2F2;
+    font-size: 14px;
+    background-color: #f2f2f2;
 
     .searchLet {
       display: flex;
       align-items: center;
       padding-right: 0 !important;
 
-      .el-select {
-        width: 53%;
+      .changeType {
+        width: 30%;
       }
-
       .timer {
         display: flex;
         align-items: center;
-        width: 42%;
-        margin-left: 14px;
-
+        width: 35%;
+        margin-left: 2%;
         span {
-          width: 30%;
-          margin-right: 10px;
+          // width: 30%;
+          margin-right: 2%;
         }
 
-        // .el-date-editor {
-        //   width: 50%;
-        // }
+        /deep/ .el-range-separator,
+        /deep/ .el-range-input {
+          font-size: 12px;
+        }
       }
-
       .isPay {
         display: flex;
         align-items: center;
-        margin-left: 14px;
-
+        width: 22%;
+        margin-left: 16px;
+        margin-right: 10px;
         span {
+          margin-right: 10px;
+        }
+
+        .el-select {
           width: 50%;
         }
 
       }
     }
 
-    .searchRit {
-      display: flex;
-      padding-left: 30px !important;
-
       .searchRit_let {
-        // display: flex;
-        // align-items: center;
-        width: 16%;
-        margin-right: 14px;
-
+        display: flex;
+        align-items: center;
+        width: 22%;
+        margin-right: 16px;
         span {
           margin-right: 10px;
         }
 
         .el-select {
-          width: 54%;
+          width: 50%;
         }
       }
+    }
+
+    .searchRit {
+      display: flex;
+      // padding-left: 30px!important;
 
       .el-button {
         display: flex;
+        justify-content: center;
         align-items: center;
         height: 38px;
-        padding: 10px 20px;
+        padding: 1% 1%;font-size: 14px;
       }
 
       .el-button {
         background-color: #009688;
         color: #fff;
-
       }
 
       .el-button:nth-of-type(1) {
-        background-color: #1E9FFF;
+        background-color: #1e9fff;
         color: #fff;
-
       }
     }
   }
@@ -753,13 +772,11 @@ export default {
     margin-left: -20px !important;
     margin-right: -20px !important;
     padding-bottom: 15px;
-    font-size: 12px;
-    background-color: #F2F2F2;
-
+    font-size: 16px;
+    background-color: #f2f2f2;
     .searchLet {
       display: flex;
       align-items: center;
-
       .el-button {
         display: flex;
         align-items: center;
@@ -767,110 +784,89 @@ export default {
         padding: 10px 20px;
         background-color: #009688;
         color: #fff;
-
       }
 
       div {
+        white-space: nowrap;
         margin-left: 15px;
         font-size: 20px;
         color: #009688;
       }
     }
-
   }
 
   .tableColumn {
     width: 92%;
 
     /deep/ tbody {
-      .el-table__row {
-        .el-table_1_column_11, .el-table_1_column_12 {
+       .el-table__row {
+        .el-table__cell:nth-of-type(11),
+        .el-table__cell:nth-of-type(12){
           .cell {
             display: flex;
             justify-content: center;
-          }
 
+          }
           .el-switch {
             // width: 64px;
           }
-
           .el-switch__label {
             position: absolute;
             display: none;
             color: #fff;
           }
-
           /*打开时文字位置设置*/
-
           .el-switch__label--right {
             z-index: 1;
             right: 10px;
           }
-
           /*关闭时文字位置设置*/
-
           .el-switch__label--left {
             z-index: 1;
             // left: 20px;
           }
-
           /*显示文字*/
-
           .el-switch__label.is-active {
             display: block;
           }
-
           .el-switch .el-switch__core,
           .el-switch .el-switch__label {
-            width: 80px;
+            width: 80px !important;
             text-align: center;
+            // background: red;
           }
         }
-
 
         .el-table__cell:last-of-type {
           .cell {
             display: flex;
             justify-content: center;
-
             .el-button {
               color: #fff;
             }
-
             .el-button:nth-of-type(1) {
-              background-color: #1E9FFF;
+              background-color: #1e9fff;
             }
-
             .el-button:nth-of-type(2) {
               background-color: #009688;
             }
-
             .el-button:nth-of-type(3) {
-              background-color: #FF5722;
+              background-color: #ff5722;
             }
           }
-
         }
-
       }
     }
-
-
   }
 
-
   .pagination {
-    border: 1px solid #EBEEF5;
+    border: 1px solid #ebeef5;
     margin-top: -1px;
     display: flex;
     justify-content: start;
-
     /deep/ .active {
       background-color: #009688 !important;
     }
-
-
   }
-
 }
 </style>
