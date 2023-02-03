@@ -139,8 +139,10 @@ public class OrderController {
         if (CollUtil.isNotEmpty(order.getDelGoodsIdList())) {
             goodsService.removeByIds(order.getDelGoodsIdList());
         }
-        order.getGoodsList().stream().filter(item -> Objects.isNull(item.getId())).forEach(item -> item.setOrderId(order.getId()));
-        goodsService.saveOrUpdateBatch(order.getGoodsList());
+        if (CollUtil.isNotEmpty(order.getGoodsList())) {
+            order.getGoodsList().stream().filter(item -> Objects.isNull(item.getId())).forEach(item -> item.setOrderId(order.getId()));
+            goodsService.saveOrUpdateBatch(order.getGoodsList());
+        }
         return RespBean.success();
     }
 }

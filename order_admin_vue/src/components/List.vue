@@ -325,7 +325,7 @@
               <el-button
                   size="mini"
                   type="danger"
-                  @click="handleDelete(scope.$index)">删除
+                  @click="handleDelete(scope.$index,scope.row)">删除
               </el-button>
             </template>
           </el-table-column>
@@ -624,8 +624,11 @@ export default {
         this.orderDetails.goodsList.find(item => item.fid === rowData.fid)[properties] = e
       });
     },
-    handleDelete(index) {
+    handleDelete(index,data) {
       this.orderDetails.goodsList.splice(index, 1)
+      let arr = this.orderDetails.delGoodsIdList ? this.orderDetails.delGoodsIdList : []
+      arr.push(data.id)
+      this.orderDetails.delGoodsIdList= arr
     },
     addRow(num) {
       let maxFid = Math.max.apply(Math, this.orderInfo.goodsList.map(item => item.fid))

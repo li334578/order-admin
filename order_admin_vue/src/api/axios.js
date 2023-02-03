@@ -48,7 +48,6 @@ axios.interceptors.response.use(
             // 服务端定义的响应code码为0时请求成功
             return Promise.resolve(response.data) // 使用Promise.resolve 正常响应
         } else if (response.data.code == 100) {
-            console.log(response)
                 // 服务端定义的响应code码为-9时为未登录，token为空
                 // 服务端定义的响应code码为100时为未登录，token为失效
             if (timeoutflag != null) {
@@ -135,7 +134,6 @@ export function post(url, data = {}) {
  * @returns {Promise}
  */
 export function postToken(url, data = {}) {
-    console.log(hosturl + url)
     return new Promise((resolve) => {
         axios
             .post(hosturl + url, data)
