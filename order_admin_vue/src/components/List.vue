@@ -113,7 +113,7 @@
         <el-table-column label="操作" width="340px" class="scopeBtn">
           <template v-slot="scope">
             <el-button type="primary" size="mini" @click="showDetailInfo(scope.row)">查看/修改</el-button>
-            <el-button size="mini">打印发布单</el-button>
+            <el-button size="mini" @click="showPrintInfo(scope.row)">打印发布单</el-button>
             <el-button type="danger" size="mini" @click="removeOrderById(scope.row.id)">删除</el-button>
           </template>
         </el-table-column>
@@ -125,7 +125,7 @@
                      layout="total, sizes, prev, pager, next, jumper" :total="total" background>
       </el-pagination>
       <!-- Table -->
-      <el-dialog title="订单信息" :visible.sync="showDialog" width="80%">
+      <el-dialog title="订单信息" :visible.sync="showOrderInfoDialog" width="80%">
         <h2>基础信息</h2>
         <el-row :gutter="20">
           <el-col :span="6">
@@ -337,6 +337,121 @@
         <el-button type="primary" @click="updateOrder(orderDetails)">保存订单</el-button>
       </el-dialog>
 
+      <el-dialog title="发货单" :visible.sync="showPrintInfoDialog" width="95%">
+        <el-button type="primary">打印</el-button>
+        <el-row :gutter="20">
+          <el-col :span="6"><div class="grid-content bg-purple">客户：{{orderDetails.customerName}}</div></el-col>
+          <el-col :span="6"><div class="grid-content bg-purple">电话：{{orderDetails.customerPhone}}</div></el-col>
+          <el-col :span="6"><div class="grid-content bg-purple">备注：{{orderDetails.remark}}</div></el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="6"><div class="grid-content bg-purple">日期：{{orderDetails.createTime}}</div></el-col>
+          <el-col :span="6"><div class="grid-content bg-purple">地址：{{orderDetails.customerAddress}}</div></el-col>
+          <el-col :span="6"><div class="grid-content bg-purple">订单号：{{orderDetails.orderNumber}}</div></el-col>
+        </el-row>
+        <el-table
+            :data="orderDetails.goodsList"
+            border
+            style="width: 100%">
+          <el-table-column
+              fixed
+              type="index">
+          </el-table-column>
+
+          <el-table-column
+              prop="goodsName"
+              label="产品名称"
+              fixed
+              width="220">
+            <template v-slot="scope">
+              {{scope.row.goodsName}}
+            </template>
+          </el-table-column>
+
+          <el-table-column
+              prop="goodsWidth"
+              label="宽度 mm"
+              width="100">
+            <template v-slot="scope">
+              {{scope.row.goodsWidth}}
+            </template>
+          </el-table-column>
+          <el-table-column
+              prop="goodsLength"
+              label="长度 mm"
+              width="100">
+            <template v-slot="scope">
+              {{scope.row.goodsLength}}
+            </template>
+          </el-table-column>
+          <el-table-column
+              prop="total"
+              label="数量"
+              width="100">
+            <template v-slot="scope">
+              {{scope.row.total}}
+            </template>
+          </el-table-column>
+          <el-table-column
+              prop="area"
+              label="面积(m²)"
+              width="100">
+            <template v-slot="scope">
+              {{scope.row.area}}
+            </template>
+          </el-table-column>
+          <el-table-column
+              prop="goodsPrice"
+              label="单价"
+              width="100">
+            <template v-slot="scope">
+              {{scope.row.goodsPrice}}
+            </template>
+          </el-table-column>
+          <el-table-column
+              prop="processingRequirements"
+              label="加工需求"
+              width="220">
+            <template v-slot="scope">
+              {{scope.row.processingRequirements}}
+            </template>
+          </el-table-column>
+          <el-table-column
+              prop="processingExpenses"
+              label="加工费用"
+              width="201">
+            <template v-slot="scope">
+              {{scope.row.processingExpenses}}
+            </template>
+          </el-table-column>
+          <el-table-column
+              prop="totalMoney"
+              label="总金额"
+              width="100">
+            <template v-slot="scope">
+              {{scope.row.totalMoney}}
+            </template>
+          </el-table-column>
+          <el-table-column
+              prop="remark"
+              label="备注"
+              width="220">
+            <template v-slot="scope">
+              {{scope.row.remark}}
+            </template>
+          </el-table-column>
+          <el-table-column
+              prop="productionProcess"
+              label="生产流程"
+              width="220">
+            <template v-slot="scope">
+              {{scope.row.productionProcess}}
+            </template>
+          </el-table-column>
+        </el-table>
+        制单人: {{orderDetails.createUserName}}
+        客户签字:
+      </el-dialog>
     </el-card>
 
   </div>
@@ -381,7 +496,8 @@ export default {
       orderList: [],
       // 总数据条数
       total: 0,
-      showDialog:false,
+      showOrderInfoDialog:false,
+      showPrintInfoDialog:false,
       orderDetails: {
         goodsList:[]
       }
@@ -441,7 +557,7 @@ export default {
     updateOrder(data) {
       this.$post('/order/updateOrder', data).then(() => {
         this.$message.success('修改成功！')
-        this.showDialog=false
+        this.showOrderInfoDialog=false
       })
     },
     buildTimeCondition() {
@@ -487,7 +603,18 @@ export default {
         }
       }).then((res) => {
         // 弹框
-        this.showDialog = true
+        this.showOrderInfoDialog = true
+        this.orderDetails = res.obj
+      })
+    },
+    showPrintInfo(data) {
+      this.$get('/order/detail', {
+        params: {
+          orderId:data.id
+        }
+      }).then((res) => {
+        // 弹框
+        this.showPrintInfoDialog = true
         this.orderDetails = res.obj
       })
     },
