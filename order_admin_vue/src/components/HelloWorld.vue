@@ -95,7 +95,8 @@
         </div>
       </el-col>
     </el-row>
-
+    <template>
+</template>
     <br/>
     <el-table
         :data="orderInfo.goodsList"
@@ -124,7 +125,7 @@
           label="宽度 mm"
           width="201">
         <template v-slot="scope">
-          <el-input-number :value="scope.row.goodsWidth" @input="saveGoods($event,scope.row,'goodsWidth')"/>
+          <el-input-number v-model="scope.row.goodsWidth" @change="saveGoods($event,scope.row,'goodsWidth')"/>
         </template>
       </el-table-column>
       <el-table-column
@@ -242,6 +243,7 @@ export default {
         totalArea: null,
         remark: null,
         payStatus: null,
+        num: 0,
         sendStatus: null,
         goodsList: []
       },
@@ -291,6 +293,9 @@ export default {
     }
   },
   methods: {
+    handleChange(e) {
+      console.log(e,"kszfldsfds");
+    },
     getCustomerList() {
       // 写get请求
       this.$get('/customer/getCustomerList').then((res) => {
@@ -312,8 +317,10 @@ export default {
       // this.$post('/order/add',this.orderInfo)
     },
     saveGoods(e, rowData, properties) {
-      this.orderInfo.goodsList[rowData.fid][properties] = e
       this.$forceUpdate()
+      this.$nextTick(() => {
+        this.orderInfo.goodsList[rowData.fid][properties] = e
+      });
     },
     addRow(num) {
       let maxFid = Math.max.apply(Math, this.orderInfo.goodsList.map(item => item.fid))
