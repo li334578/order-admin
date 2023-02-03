@@ -164,6 +164,7 @@ export default {
   },
   created() {
     this.getGoodsList()
+
   },
   methods: {
     // 根据分页获取对应的商品列表
@@ -232,6 +233,9 @@ export default {
 <style lang="less" scoped>
   .orderInquiry {
 
+    span {
+        white-space: nowrap;
+      }
    /deep/ .el-card__body {
       padding-top: 0!important;
     }
@@ -242,6 +246,8 @@ export default {
       margin-right: -20px!important;
       font-size: 12px;
       background-color: #F2F2F2;
+
+
       .searchLet {
       display: flex;
       align-items: center;
@@ -257,7 +263,7 @@ export default {
         width: 42%;
         margin-left: 14px;
         span {
-          width: 30%;
+          // width: 30%;
           margin-right: 10px;
         }
         // .el-date-editor {
@@ -269,7 +275,8 @@ export default {
         align-items: center;
         margin-left: 14px;
         span {
-          width: 50%;
+          // width: 50%;
+          margin-right: 10px;
         }
 
       }
@@ -281,7 +288,7 @@ export default {
       .searchRit_let {
         // display: flex;
         // align-items: center;
-        width: 16%;
+        // width: 16%;
         margin-right: 14px;
         span {
           margin-right: 10px;
@@ -296,7 +303,8 @@ export default {
         display: flex;
         align-items: center;
         height: 38px;
-        padding: 10px 20px;
+        // padding: 10px 20px;
+        padding: 1% 1%;
         
       }
 
@@ -334,6 +342,7 @@ export default {
       }
 
       div {
+        white-space: nowrap;
         margin-left: 15px;
         font-size: 20px;
         color: #009688;
