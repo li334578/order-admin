@@ -247,21 +247,21 @@ export default {
       },
       options1: [
         {
-          value: 1,
+          value: true,
           label: '已付款'
         },
         {
-          value: 0,
+          value: false,
           label: '未付款'
         }
       ],
       options2: [
         {
-          value: 1,
+          value: true,
           label: '已发货'
         },
         {
-          value: 0,
+          value: false,
           label: '未发货'
         }
       ],

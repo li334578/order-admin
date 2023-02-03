@@ -114,7 +114,7 @@
           <template v-slot="scope">
             <el-button type="primary" size="mini" @click="showDetailInfo(scope.row)">查看/修改</el-button>
             <el-button size="mini">打印发布单</el-button>
-            <el-button type="danger" size="mini" @click="removeById(scope.row.goods_id)">删除</el-button>
+            <el-button type="danger" size="mini" @click="removeOrderById(scope.row.id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -359,20 +359,20 @@ export default {
       customerList: [],
       options1: [
           {
-        value: 1,
+        value: true,
         label: '已付款'
       },
         {
-          value: 0,
+          value: false,
           label: '未付款'
         }],
       options2: [
         {
-          value: 1,
+          value: true,
           label: '已发货'
         },
         {
-          value: 0,
+          value: false,
           label: '未发货'
         }],
       value: '',
@@ -456,9 +456,9 @@ export default {
       this.queryInfo.current = newPage
       this.getOrderList()
     },
-    async removeById(id) {
+    async removeOrderById(id) {
       const confirmResult = await this.$confirm(
-          '此操作将永久删除该商品, 是否继续?',
+          '此操作将永久删除该订单, 是否继续?',
           '提示',
           {
             confirmButtonText: '确定',
@@ -471,9 +471,9 @@ export default {
         return this.$message.info('已经取消删除！')
       }
 
-      const {data: res} = await this.$getete(`goods/${id}`)
+      const {data: res} = await this.$delete(`/order/del/${id}`)
 
-      if (res.meta.status !== 200) {
+      if (res.meta.status !== 1) {
         return this.$message.error('删除失败！')
       }
 
