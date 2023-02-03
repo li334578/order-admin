@@ -3,6 +3,7 @@ package com.example.order_admin_java.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.order_admin_java.pojo.Order;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -15,6 +16,6 @@ import java.util.List;
  */
 @Mapper
 public interface OrderMapper extends BaseMapper<Order> {
-    @Select("select * from order where order_number like concat('',#{orderNumber},'%')")
-    List<Order> getListByOrderNumberLeftMatching(String orderNumber);
+    @Select("select * from tb_order where order_number like #{orderNumber}")
+    List<Order> getListByOrderNumberLeftMatching(@Param("orderNumber") String orderNumber);
 }

@@ -101,4 +101,10 @@ public class Order extends PageBean<Order> {
      */
     @TableField(exist = false)
     private List<Goods> goodsList;
+
+    /**
+     * 删除的货物id
+     */
+    @TableField(exist = false)
+    private List<Long> delGoodsIdList;
 }

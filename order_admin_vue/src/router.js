@@ -1,11 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-// import Home from './components/Home.vue'
-const Home = () => import(/* webpackChunkName: "login_home_welcome" */ './components/Home.vue')
-// import Welcome from './components/Welcome.vue'
-const Welcome = () => import(/* webpackChunkName: "login_home_welcome" */ './components/Welcome.vue')
-const HelloWorld = () => import(/* webpackChunkName: "login_home_welcome" */ './components/HelloWorld.vue')
+const Home = () => import('./components/Home.vue')
+const Welcome = () => import('./components/Welcome.vue')
+const HelloWorld = () => import('./components/HelloWorld.vue')
 const Cate = () => import( './components/List.vue')
 
 Vue.use(Router)

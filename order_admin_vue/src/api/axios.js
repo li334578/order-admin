@@ -6,7 +6,7 @@ import { Message } from 'element-ui' // element Toast的提示
 // import { MessageBox } from 'element-ui'
 // import { Loading } from 'element-ui'
 import Cookies from 'js-cookie'
-const hosturl = '/apis/HNMajorApp-api'
+const hosturl = 'http://jhcxpk.natappfree.cc'
 var timeoutflag = null
     // const hosturl = 'http://www.hainanqx.cn:8090/HNMajorApp-api'
     // 过滤请求
@@ -48,7 +48,6 @@ axios.interceptors.response.use(
             // 服务端定义的响应code码为0时请求成功
             return Promise.resolve(response.data) // 使用Promise.resolve 正常响应
         } else if (response.data.code == 100) {
-            console.log(response)
                 // 服务端定义的响应code码为-9时为未登录，token为空
                 // 服务端定义的响应code码为100时为未登录，token为失效
             if (timeoutflag != null) {
@@ -91,10 +90,9 @@ export function get(url, data = {}) {
     // openLoading != 'open' ? openWin() : ''
     return new Promise((resolve) => {
         axios
-            .get(url, data)
+            .get(hosturl+url, data)
             .then(response => {
                 resolve(response)
-                console.log(response)
                     // openLoading != 'open' ? openWin('clockV') : ''
             })
             .catch(error => {
@@ -116,7 +114,7 @@ export function get(url, data = {}) {
 export function post(url, data = {}) {
     return new Promise((resolve) => {
         axios
-            .post(url, data)
+            .post(hosturl+url, data)
             .then(response => {
                 resolve(response)
             })
@@ -136,7 +134,6 @@ export function post(url, data = {}) {
  * @returns {Promise}
  */
 export function postToken(url, data = {}) {
-    console.log(hosturl + url)
     return new Promise((resolve) => {
         axios
             .post(hosturl + url, data)
