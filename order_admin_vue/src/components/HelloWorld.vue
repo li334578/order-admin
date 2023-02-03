@@ -95,8 +95,6 @@
         </div>
       </el-col>
     </el-row>
-    <template>
-</template>
     <br/>
     <el-table
         :data="orderInfo.goodsList"
@@ -133,7 +131,7 @@
           label="长度 mm"
           width="201">
         <template v-slot="scope">
-          <el-input-number :value="scope.row.goodsLength" @input="saveGoods($event,scope.row,'goodsLength')"/>
+          <el-input-number v-model="scope.row.goodsLength" @change="saveGoods($event,scope.row,'goodsLength')"/>
         </template>
       </el-table-column>
       <el-table-column
@@ -150,7 +148,7 @@
           label="面积(m²)"
           width="201">
         <template v-slot="scope">
-          <el-input-number :value="scope.row.area" @input="saveGoods($event,scope.row,'area')"/>
+          <el-input-number v-model="scope.row.area" @change="saveGoods($event,scope.row,'area')"/>
         </template>
       </el-table-column>
       <el-table-column
@@ -158,7 +156,7 @@
           label="单价"
           width="201">
         <template v-slot="scope">
-          <el-input-number :value="scope.row.goodsPrice" @input="saveGoods($event,scope.row,'goodsPrice')"/>
+          <el-input-number v-model="scope.row.goodsPrice" @change="saveGoods($event,scope.row,'goodsPrice')"/>
         </template>
       </el-table-column>
       <el-table-column
@@ -166,7 +164,7 @@
           label="加工需求"
           width="220">
         <template v-slot="scope">
-          <el-input :value="scope.row.processingRequirements"
+          <el-input v-model="scope.row.processingRequirements"
                     @input="saveGoods($event,scope.row,'processingRequirements')"/>
         </template>
       </el-table-column>
@@ -175,8 +173,8 @@
           label="加工费用"
           width="201">
         <template v-slot="scope">
-          <el-input-number :value="scope.row.processingExpenses"
-                           @input="saveGoods($event,scope.row,'processingExpenses')"/>
+          <el-input-number v-model="scope.row.processingExpenses"
+                           @change="saveGoods($event,scope.row,'processingExpenses')"/>
         </template>
       </el-table-column>
       <el-table-column
@@ -184,7 +182,7 @@
           label="总金额"
           width="201">
         <template v-slot="scope">
-          <el-input-number :value="scope.row.totalMoney" @input="saveGoods($event,scope.row,'totalMoney')"/>
+          <el-input-number v-model="scope.row.totalMoney" @change="saveGoods($event,scope.row,'totalMoney')"/>
         </template>
       </el-table-column>
       <el-table-column
@@ -216,11 +214,11 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-button primary @click="addRow(1)">加一行</el-button>
-    <el-button primary @click="addRow(3)">加三行</el-button>
-    <el-button primary @click="addRow(10)">加十行</el-button>
-    <el-button primary @click="addRow(50)">加五十行</el-button>
-    <el-button primary @click="addOrder()">提交订单</el-button>
+    <el-button @click="addRow(1)">加一行</el-button>
+    <el-button @click="addRow(3)">加三行</el-button>
+    <el-button @click="addRow(10)">加十行</el-button>
+    <el-button @click="addRow(50)">加五十行</el-button>
+    <el-button type="primary" @click="addOrder()">提交订单</el-button>
   </div>
 </template>
 
@@ -249,21 +247,21 @@ export default {
       },
       options1: [
         {
-          value: 1,
+          value: true,
           label: '已付款'
         },
         {
-          value: 0,
+          value: false,
           label: '未付款'
         }
       ],
       options2: [
         {
-          value: 1,
+          value: true,
           label: '已发货'
         },
         {
-          value: 0,
+          value: false,
           label: '未发货'
         }
       ],
@@ -293,9 +291,6 @@ export default {
     }
   },
   methods: {
-    handleChange(e) {
-      console.log(e,"kszfldsfds");
-    },
     getCustomerList() {
       // 写get请求
       this.$get('/customer/getCustomerList').then((res) => {
@@ -319,7 +314,7 @@ export default {
     saveGoods(e, rowData, properties) {
       this.$forceUpdate()
       this.$nextTick(() => {
-        this.orderInfo.goodsList[rowData.fid][properties] = e
+        this.orderInfo.goodsList.find(item => item.fid === rowData.fid)[properties] = e
       });
     },
     addRow(num) {
