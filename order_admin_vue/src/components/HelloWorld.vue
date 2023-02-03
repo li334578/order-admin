@@ -1,5 +1,6 @@
 <template>
   <div class="hello">
+
     客户:
     <el-select v-model="selectCustomerId" @change="fillCustomerInfo()" filterable placeholder="请选择">
       <el-option
@@ -9,50 +10,214 @@
           :value="customer.id">
       </el-option>
     </el-select>
+    <el-row :gutter="20">
+      <el-col :span="6">
+        <div class="grid-content bg-purple">客户
+          <el-input label="" v-model="orderInfo.customerName"></el-input>
+        </div>
+      </el-col>
+      <el-col :span="6">
+        <div class="grid-content bg-purple">联系电话
+          <el-input v-model="orderInfo.customerPhone"></el-input>
+        </div>
+      </el-col>
+      <el-col :span="6">
+        <div class="grid-content bg-purple">地址
+          <el-input v-model="orderInfo.customerAddress"></el-input>
+        </div>
+      </el-col>
+      <el-col :span="6">
+        <div class="grid-content bg-purple">制单人
+          <el-input v-model="orderInfo.createUserName"></el-input>
+        </div>
+      </el-col>
+    </el-row>
+    <el-row :gutter="20">
+      <el-col :span="6">
+        <div class="grid-content bg-purple">
+          订单日期
+          <el-date-picker
+              v-model="orderInfo.createTime"
+              type="date"
+              placeholder="选择日期">
+          </el-date-picker>
+        </div>
+      </el-col>
+      <el-col :span="6">
+        <div class="grid-content bg-purple">
+          金额
+          <el-input v-model="orderInfo.money"></el-input>
+        </div>
+      </el-col>
+      <el-col :span="6">
+        <div class="grid-content bg-purple">已收款
+          <el-input v-model="orderInfo.receiveMoney"></el-input>
+        </div>
+      </el-col>
+      <el-col :span="6">
+        <div class="grid-content bg-purple">
+          总面积
+          <el-input v-model="orderInfo.totalArea"></el-input>
+        </div>
+      </el-col>
+    </el-row>
+    <el-row :gutter="20">
+      <el-col :span="6">
+        <div class="grid-content bg-purple">
+          备注
+          <el-input v-model="orderInfo.remark"></el-input>
+        </div>
+      </el-col>
+      <el-col :span="6">
+        <div class="grid-content bg-purple">
+          是否已付款
+          <el-select v-model="orderInfo.payStatus" placeholder="请选择">
+            <el-option
+                v-for="item in options1"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+            </el-option>
+          </el-select>
+        </div>
+      </el-col>
+      <el-col :span="6">
+        <div class="grid-content bg-purple">
+          发货状态
+          <el-select v-model="orderInfo.sendStatus" placeholder="请选择">
+            <el-option
+                v-for="item in options2"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+            </el-option>
+          </el-select>
+        </div>
+      </el-col>
+    </el-row>
+
     <br/>
-    客户
-    <el-input v-model="orderInfo.customerName"></el-input>
-    联系电话
-    <el-input v-model="orderInfo.customerPhone"></el-input>
-    地址
-    <el-input v-model="orderInfo.customerAddress"></el-input>
-    制单人
-    <el-input v-model="orderInfo.createUserName"></el-input>
-    订单日期
-    <el-date-picker
-        v-model="orderInfo.createTime"
-        type="date"
-        placeholder="选择日期">
-    </el-date-picker>
-    <br/>
-    金额
-    <el-input v-model="orderInfo.money"></el-input>
-    已收款
-    <el-input v-model="orderInfo.receiveMoney"></el-input>
-    总面积
-    <el-input v-model="orderInfo.totalArea"></el-input>
-    备注
-    <el-input v-model="orderInfo.remark"></el-input>
-    是否已付款
-    <el-select v-model="orderInfo.payStatus" placeholder="请选择">
-      <el-option
-          v-for="item in options1"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-      </el-option>
-    </el-select>
-    发货状态
-    <el-select v-model="orderInfo.sendStatus" placeholder="请选择">
-      <el-option
-          v-for="item in options2"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-      </el-option>
-    </el-select>
-    <br/>
-    <el-button primary @click="addOrder()">新增</el-button>
+    <el-table
+        :data="orderInfo.goodsList"
+        border stripe
+        style="width: 100%">
+      <el-table-column
+          fixed
+          type="index">
+      </el-table-column>
+
+      <el-table-column
+          prop="goodsName"
+          label="产品名称"
+          fixed
+          width="220">
+        <template v-slot="scope">
+          <el-input :value="scope.row.goodsName" @input="saveGoods($event,scope.row,'goodsName')"/>
+        </template>
+      </el-table-column>
+
+      <el-table-column
+          prop="goodsWidth"
+          sortable
+          label="宽度 mm"
+          width="201">
+        <template v-slot="scope">
+          <el-input-number :value="scope.row.goodsWidth" @input="saveGoods($event,scope.row,'goodsWidth')"/>
+        </template>
+      </el-table-column>
+      <el-table-column
+          prop="goodsLength"
+          label="长度 mm"
+          width="201">
+        <template v-slot="scope">
+          <el-input-number :value="scope.row.goodsLength" @input="saveGoods($event,scope.row,'goodsLength')"/>
+        </template>
+      </el-table-column>
+      <el-table-column
+          prop="total"
+          label="数量"
+          width="150">
+        <template v-slot="scope">
+          <el-input :value="scope.row.total" @input="saveGoods($event,scope.row,'total')"/>
+        </template>
+      </el-table-column>
+      <el-table-column
+          prop="area"
+          sortable
+          label="面积(m²)"
+          width="201">
+        <template v-slot="scope">
+          <el-input-number :value="scope.row.area" @input="saveGoods($event,scope.row,'area')"/>
+        </template>
+      </el-table-column>
+      <el-table-column
+          prop="goodsPrice"
+          label="单价"
+          width="201">
+        <template v-slot="scope">
+          <el-input-number :value="scope.row.goodsPrice" @input="saveGoods($event,scope.row,'goodsPrice')"/>
+        </template>
+      </el-table-column>
+      <el-table-column
+          prop="processingRequirements"
+          label="加工需求"
+          width="220">
+        <template v-slot="scope">
+          <el-input :value="scope.row.processingRequirements"
+                    @input="saveGoods($event,scope.row,'processingRequirements')"/>
+        </template>
+      </el-table-column>
+      <el-table-column
+          prop="processingExpenses"
+          label="加工费用"
+          width="201">
+        <template v-slot="scope">
+          <el-input-number :value="scope.row.processingExpenses"
+                           @input="saveGoods($event,scope.row,'processingExpenses')"/>
+        </template>
+      </el-table-column>
+      <el-table-column
+          prop="totalMoney"
+          label="总金额"
+          width="201">
+        <template v-slot="scope">
+          <el-input-number :value="scope.row.totalMoney" @input="saveGoods($event,scope.row,'totalMoney')"/>
+        </template>
+      </el-table-column>
+      <el-table-column
+          prop="remark"
+          label="备注"
+          width="220">
+        <template v-slot="scope">
+          <el-input :value="scope.row.remark" @input="saveGoods($event,scope.row,'remark')"/>
+        </template>
+      </el-table-column>
+      <el-table-column
+          prop="productionProcess"
+          label="生产流程"
+          width="220">
+        <template v-slot="scope">
+          <el-input :value="scope.row.productionProcess" @input="saveGoods($event,scope.row,'productionProcess')"/>
+        </template>
+      </el-table-column>
+      <el-table-column
+          fixed="right"
+          label="操作列"
+          width="80">
+        <template v-slot="scope">
+          <el-button
+              size="mini"
+              type="danger"
+              @click="handleDelete(scope.$index)">删除
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <el-button primary @click="addRow(1)">加一行</el-button>
+    <el-button primary @click="addRow(3)">加三行</el-button>
+    <el-button primary @click="addRow(10)">加十行</el-button>
+    <el-button primary @click="addRow(50)">加五十行</el-button>
+    <el-button primary @click="addOrder()">提交订单</el-button>
   </div>
 </template>
 
@@ -97,7 +262,7 @@ export default {
           value: 0,
           label: '未发货'
         }
-      ]
+      ],
     };
   },
   props: {
@@ -105,6 +270,23 @@ export default {
   },
   created() {
     this.getCustomerList()
+    for (let i = 0; i < 4; i++) {
+      this.orderInfo.goodsList.push(
+          {
+            fid: i,
+            goodsName: null,
+            goodsWidth: null,
+            goodsLength: null,
+            total: null,
+            area: null,
+            goodsPrice: null,
+            processingRequirements: null,
+            processingExpenses: null,
+            totalMoney: null,
+            remark: null,
+            productionProcess: null,
+          })
+    }
   },
   methods: {
     getCustomerList() {
@@ -123,7 +305,39 @@ export default {
     },
     addOrder() {
       console.log(this.orderInfo)
+      // 写入goodsList属性
+      this.orderInfo.goodsList = this.orderInfo.goodsList.filter(item => item)
       // this.$post('/order/add',this.orderInfo)
+    },
+    saveGoods(e, rowData, properties) {
+      this.orderInfo.goodsList[rowData.fid][properties] = e
+      this.$forceUpdate()
+    },
+    addRow(num) {
+      let maxFid = Math.max.apply(Math, this.orderInfo.goodsList.map(item => item.fid))
+      for (let i = 1; i <= num; i++) {
+        maxFid++
+        // 拿到最大的fid
+        this.orderInfo.goodsList.push(
+            {
+              fid: maxFid,
+              goodsName: null,
+              goodsWidth: null,
+              goodsLength: null,
+              total: null,
+              area: null,
+              goodsPrice: null,
+              processingRequirements: null,
+              processingExpenses: null,
+              totalMoney: null,
+              remark: null,
+              productionProcess: null,
+            }
+        )
+      }
+    },
+    handleDelete(index) {
+      this.orderInfo.goodsList.splice(index, 1)
     }
   }
 }

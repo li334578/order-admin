@@ -6,7 +6,7 @@ import { Message } from 'element-ui' // element Toast的提示
 // import { MessageBox } from 'element-ui'
 // import { Loading } from 'element-ui'
 import Cookies from 'js-cookie'
-const hosturl = 'http://192.168.10.20:8888'
+const hosturl = 'http://jhcxpk.natappfree.cc'
 var timeoutflag = null
     // const hosturl = 'http://www.hainanqx.cn:8090/HNMajorApp-api'
     // 过滤请求
