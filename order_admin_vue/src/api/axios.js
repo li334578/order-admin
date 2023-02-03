@@ -116,7 +116,7 @@ export function get(url, data = {}) {
 export function post(url, data = {}) {
     return new Promise((resolve) => {
         axios
-            .post(url, data)
+            .post(hosturl+url, data)
             .then(response => {
                 resolve(response)
             })

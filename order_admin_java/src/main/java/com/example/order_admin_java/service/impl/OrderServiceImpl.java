@@ -1,5 +1,6 @@
 package com.example.order_admin_java.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.order_admin_java.mapper.OrderMapper;
@@ -23,6 +24,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
 
     @Resource
     private OrderMapper orderMapper;
+
     /**
      * 根据条件查询订单信息
      */
@@ -30,7 +32,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     public Collection<Order> listByCondition(Order order) {
         QueryWrapper<Order> queryWrapper = buildOrderQueryWrapper(order);
         if (Objects.nonNull(order.getStart()) && Objects.nonNull(order.getSize())) {
-            queryWrapper.apply(" limit {},{}", order.getStart(), order.getSize());
+            queryWrapper.last(StrUtil.format(" limit {},{}", order.getStart(), order.getSize()));
         }
         return this.list(queryWrapper);
     }
@@ -66,6 +68,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
      */
     @Override
     public List<Order> getListByOrderNumberLeftMatching(String orderNumber) {
+        orderNumber = orderNumber + "%";
         return orderMapper.getListByOrderNumberLeftMatching(orderNumber);
     }
 }
