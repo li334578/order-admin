@@ -23,6 +23,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
 
     @Resource
     private OrderMapper orderMapper;
+
     /**
      * 根据条件查询订单信息
      */
@@ -66,6 +67,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
      */
     @Override
     public List<Order> getListByOrderNumberLeftMatching(String orderNumber) {
+        orderNumber = orderNumber + "%";
         return orderMapper.getListByOrderNumberLeftMatching(orderNumber);
     }
 }
