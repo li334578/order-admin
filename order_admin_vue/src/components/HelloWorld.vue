@@ -100,7 +100,9 @@
     <el-table
         :data="orderInfo.goodsList"
         border stripe
-        style="width: 100%">
+        style="width: 100%"
+        row-key="fid"
+        >
       <el-table-column
           fixed
           type="index">
