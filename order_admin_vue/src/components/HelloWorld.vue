@@ -103,10 +103,6 @@ export default {
   props: {
     msg: String
   },
-<<<<<<< HEAD
-  mounted () {
-    console.log(this,"ksfldsfdsfds");
-=======
   created() {
     this.getCustomerList()
   },
@@ -129,7 +125,6 @@ export default {
       console.log(this.orderInfo)
       // this.$post('/order/add',this.orderInfo)
     }
->>>>>>> 21ee903bac056a61ea2770df1505e9800e5e89f5
   }
 }
 </script>
