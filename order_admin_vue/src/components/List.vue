@@ -5,7 +5,7 @@
       <el-row :gutter="24" class="searchModel">
         <el-col :span="10" class="searchLet">
           <span>客户</span>
-          <el-select v-model="queryInfo.customerId" placeholder="">
+          <el-select v-model="queryInfo.customerId" clearable placeholder="">
             <el-option
                 v-for="customer in customerList"
                 :key="customer.id"
@@ -25,17 +25,16 @@
                 end-placeholder="结束日期">
             </el-date-picker>
           </div>
-
           <div class="isPay">
             <span>是否已付款</span>
-            <el-select v-model="queryInfo.payStatus" clearable placeholder="">
-              <el-option
-                  v-for="item in options1"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-              </el-option>
-            </el-select>
+              <el-select v-model="queryInfo.payStatus" clearable placeholder="">
+                <el-option
+                    v-for="item in options1"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                </el-option>
+              </el-select>
           </div>
 
         </el-col>
@@ -63,8 +62,8 @@
 
       <el-row :gutter="24" class="searchModel_Amount">
         <el-col :span="10" class="searchLet">
-          <el-button @click="changeCondition('sendStatus')">未发货产品</el-button>
-          <el-button @click="changeCondition('productStatus')">未生产产品</el-button>
+          <el-button>未发货产品</el-button>
+          <el-button>未生产产品</el-button>
           <div>金额:{{totalMoney}},总面积:{{totalArea}}</div>
 
         </el-col>
@@ -88,10 +87,10 @@
           <template v-slot="scope">
             <el-switch
                 v-model="scope.row.payStatus"
-                width="80px"
+                :width="80"
                 active-text="已付款"
                 inactive-text="未付款"
-                @click="removeById(scope.row.goods_id)">
+                @change="updateStatus(scope.row)">
             </el-switch>
           </template>
         </el-table-column>
@@ -99,10 +98,10 @@
           <template v-slot="scope">
             <el-switch
                 v-model="scope.row.sendStatus"
-                width="80px"
+                :width="80"
                 active-text="已发货"
                 inactive-text="未发货"
-                @click="removeById(scope.row.goods_id)">
+                @change="updateStatus(scope.row)">
             </el-switch>
           </template>
         </el-table-column>
@@ -215,15 +214,14 @@ export default {
         }
         this.orderList = arr
         this.total = res.obj.total;
-        console.log("order list is", res.obj.data)
       })
-      this.$message.success('获取商品列表成功！')
+      this.$message.success('获取订单列表成功！')
     },
     selectData() {
       this.getOrderList()
     },
-    changeCondition(conditionName){
-      console.log(conditionName)
+    updateStatus(data) {
+      this.$post('/order/updateOrder', data).then(() => this.$message.success('修改状态成功！'))
     },
     buildTimeCondition() {
       this.queryInfo.startCreateTime = this.timeRangeCondition[0]
