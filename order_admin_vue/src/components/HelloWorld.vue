@@ -311,10 +311,10 @@ export default {
       this.orderInfo.customerAddress = customer.customerAddress;
     },
     addOrder() {
-      // 过滤掉产品名为空的数据
-      this.orderInfo.goodsList = this.orderInfo.goodsList.filter(item => item.goodsName !== null)
       console.log(this.orderInfo)
-      this.$post('/order/add', this.orderInfo)
+      // 写入goodsList属性
+      this.orderInfo.goodsList = this.orderInfo.goodsList.filter(item => item)
+      // this.$post('/order/add',this.orderInfo)
     },
     saveGoods(e, rowData, properties) {
       this.$forceUpdate()
