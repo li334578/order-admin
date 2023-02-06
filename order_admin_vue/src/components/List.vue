@@ -474,6 +474,7 @@
           <el-table-column
             fixed
             type="index"
+            :index="processingIndex"
             label="序号"
             width="60"
           ></el-table-column>
@@ -840,6 +841,9 @@ export default {
     },
     printWindow() {
       this.$print(this.$refs.print);
+    },
+    processingIndex(index) {
+      return index + 1 === this.printDetails.goodsList.length ? "合计:" : index + 1;
     },
   },
 };
