@@ -432,40 +432,40 @@
           <el-row :gutter="20">
             <el-col :span="8">
               <div class="grid-content bg-purple">
-                客户：{{ orderDetails.customerName }}
+                客户：{{ printDetails.customerName }}
               </div>
             </el-col>
             <el-col :span="8">
               <div class="grid-content bg-purple">
-                电话：{{ orderDetails.customerPhone }}
+                电话：{{ printDetails.customerPhone }}
               </div>
             </el-col>
             <el-col :span="8">
               <div class="grid-content bg-purple">
-                备注：{{ orderDetails.remark }}
+                备注：{{ printDetails.remark }}
               </div>
             </el-col>
           </el-row>
           <el-row :gutter="20">
             <el-col :span="8">
               <div class="grid-content bg-purple">
-                日期：{{ orderDetails.createTime }}
+                日期：{{ printDetails.createTime }}
               </div>
             </el-col>
             <el-col :span="8">
               <div class="grid-content bg-purple">
-                地址：{{ orderDetails.customerAddress }}
+                地址：{{ printDetails.customerAddress }}
               </div>
             </el-col>
             <el-col :span="8">
               <div class="grid-content bg-purple">
-                订单号：{{ orderDetails.orderNumber }}
+                订单号：{{ printDetails.orderNumber }}
               </div>
             </el-col>
           </el-row>
         </div>
         <el-table
-          :data="orderDetails.goodsList"
+          :data="printDetails.goodsList"
           border
           style="width: 100%"
           class="invoiceTable"
@@ -549,7 +549,7 @@
         </el-table>
         <el-row :gutter="20" class="sign"> 
         <el-col :span="16">
-          <div class="grid-content bg-purple">制单人:</div>
+          <div class="grid-content bg-purple">制单人:{{this.printDetails.createUserName}}</div>
         </el-col>
         <el-col :span="8">
           <div class="grid-content bg-purple">客户签字:</div>
@@ -607,6 +607,9 @@ export default {
       orderDetails: {
         goodsList: [],
       },
+      printDetails:{
+        goodsList: [],
+      }
     };
   },
   created() {
@@ -624,11 +627,51 @@ export default {
       }
       return 0;
     },
+    goodsListTotalMoney() {
+      if (this.printDetails.goodsList) {
+        let result = 0;
+        this.printDetails.goodsList.forEach((item) => {
+          result += item.totalMoney ? item.totalMoney : 0;
+        });
+        return result;
+      }
+      return 0;
+    },
     totalArea() {
       if (this.orderList) {
         let result = 0;
         this.orderList.forEach((item) => {
           result += item.totalArea ? item.totalArea : 0;
+        });
+        return result;
+      }
+      return 0;
+    },
+    goodsListTotalArea() {
+      if (this.printDetails.goodsList) {
+        let result = 0;
+        this.printDetails.goodsList.forEach((item) => {
+          result += item.area ? item.area : 0;
+        });
+        return result;
+      }
+      return 0;
+    },
+    goodsListTotalNumber() {
+      if (this.printDetails.goodsList) {
+        let result = 0;
+        this.printDetails.goodsList.forEach((item) => {
+          result += item.total ? item.total : 0;
+        });
+        return result;
+      }
+      return 0;
+    },
+    goodsListProcessingExpenses(){
+      if (this.printDetails.goodsList) {
+        let result = 0;
+        this.printDetails.goodsList.forEach((item) => {
+          result += item.processingExpenses ? item.processingExpenses : 0;
         });
         return result;
       }
@@ -645,7 +688,7 @@ export default {
     },
     // 合并单元格
     arraySpanMethod({ rowIndex, columnIndex }) {
-      const goodListlength = this.orderDetails.goodsList.length;
+      const goodListlength = this.printDetails.goodsList.length;
       console.log(goodListlength,"ksfldsfdsf",rowIndex);
           if (rowIndex  === goodListlength - 1) {
             if (columnIndex === 0) {
@@ -737,7 +780,22 @@ export default {
       }).then((res) => {
         // 弹框
         this.showPrintInfoDialog = true;
-        this.orderDetails = res.obj;
+        this.printDetails = res.obj;
+        if (this.printDetails.goodsList){
+          this.printDetails.goodsList.push({
+            goodsName: null,
+            goodsWidth: null,
+            goodsLength: null,
+            total: this.goodsListTotalNumber,
+            area: this.goodsListTotalArea,
+            goodsPrice: null,
+            processingRequirements: null,
+            processingExpenses: this.goodsListProcessingExpenses,
+            totalMoney: this.goodsListTotalMoney,
+            remark: null,
+            productionProcess: null,
+          })
+        }
       });
     },
     saveGoods(e, rowData, properties) {
