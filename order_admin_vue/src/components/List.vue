@@ -351,8 +351,8 @@
         <el-button type="primary" @click="updateOrder(orderDetails)">保存订单</el-button>
       </el-dialog>
 
-      <el-dialog title="发货单" :visible.sync="showPrintInfoDialog" width="95%">
-        <el-button type="primary">打印</el-button>
+      <el-dialog title="发货单" ref="print" :visible.sync="showPrintInfoDialog" width="95%">
+        <el-button type="primary" class="no-print" @click="printWindow()">打印</el-button>
         <el-row :gutter="20">
           <el-col :span="6"><div class="grid-content bg-purple">客户：{{orderDetails.customerName}}</div></el-col>
           <el-col :span="6"><div class="grid-content bg-purple">电话：{{orderDetails.customerPhone}}</div></el-col>
@@ -669,6 +669,9 @@ export default {
         )
       }
     },
+    printWindow() {
+      this.$print(this.$refs.print)
+    }
   }
 }
 </script>
