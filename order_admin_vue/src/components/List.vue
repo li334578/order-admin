@@ -690,7 +690,6 @@ export default {
     // 合并单元格
     arraySpanMethod({ rowIndex, columnIndex }) {
       const goodListlength = this.printDetails.goodsList.length;
-      console.log(goodListlength,"ksfldsfdsf",rowIndex);
           if (rowIndex  === goodListlength - 1) {
             if (columnIndex === 0) {
               return [1, 2];
