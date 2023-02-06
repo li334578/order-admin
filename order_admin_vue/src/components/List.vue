@@ -683,6 +683,8 @@ span {
   }
 
   .searchModel {
+    display: flex;
+    align-items: center;
     padding-top: 20px;
     padding-bottom: 15px;
     margin-left: -20px !important;
