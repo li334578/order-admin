@@ -23,7 +23,7 @@ module.exports = {
                 // target: 'http://192.168.3.18:8080', // 源地址
                 // target: 'http://119.3.36.107:81/', // 源地址
                 // target: 'http://192.168.3.222:8084', // 源地址
-                target: 'http://jhcxpk.natappfree.cc', // 源地址
+                target: 'http://j6entq.natappfree.cc', // 源地址
                 changeOrigin: true, // 改变源
                 pathRewrite: {
                     '^/apis': '' // 路径重写
