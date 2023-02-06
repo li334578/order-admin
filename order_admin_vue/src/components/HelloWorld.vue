@@ -238,7 +238,7 @@
             />
           </template>
         </el-table-column>
-        <el-table-column fixed="right" label="操作列" width="80">
+        <el-table-column fixed="right" label="操作" width="80">
           <template v-slot="scope">
             <el-button
               size="small"
