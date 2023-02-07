@@ -1213,9 +1213,13 @@ export default {
   // left: 10.4%;
   // top: -3.4%;
 
-
+  /deep/  .el-table__fixed {
+        height: 100%!important;
+      }
 
   /deep/ .el-dialog__body {
+
+
     .order_tit {
       font-size: 22px;
       margin: 20px 0;
@@ -1256,9 +1260,10 @@ export default {
     .invoiceTable {
       border: 1px solid#000;
 
-      .el-table__fixed {
-        height: 100%;
+      .el-table__body-wrapper {
+        overflow-x: hidden;
       }
+
       thead th {
         background-color: #f0f0f0;
         border-color: #000;
