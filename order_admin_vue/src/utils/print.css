@@ -1,0 +1,39 @@
+@media print {
+
+ .el-dialog {
+    width: 100%!important;
+  }
+ 
+    /* section{
+        margin-top: -35px;
+    }
+    .el-table__header{
+      width: 100%!important;
+    }
+    .el-table__body{
+      width: 100%!important;
+    }
+  .el-table__header{
+    table-layout: auto;
+    }
+  .el-table__body{
+    table-layout: auto!important;
+  }
+ 
+  .modal-body {
+    min-height: auto;
+  }
+ 
+  .el-table--border th, .el-table--border td{
+    border-right: 1px solid #ebeef5;
+  }
+  .el-table th, .el-table td{
+    padding: 0px;
+  }
+  .el-table .cell{
+    padding-right: 0px;
+  }
+  .el-table{
+    width: 100%!important;
+  } */
+}
