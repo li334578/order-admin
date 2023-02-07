@@ -264,7 +264,7 @@
 
 <script>
 export default {
-  name: "HelloWorld",
+  name: "OrderEntry",
   data() {
     return {
       customerList: [],
