@@ -231,12 +231,12 @@
               <el-input v-model="orderDetails.remark"></el-input>
             </div>
           </el-col>
-          <el-col :span="5">
-            <div class="grid-content bg-purple">
-              <span>订单号</span>
-              <el-input disabled v-model="orderDetails.orderNumber"></el-input>
-            </div>
-          </el-col>
+          <el-col :span="4">
+          <div class="grid-content bg-purple">
+            <span>订单号</span>
+            <el-input disabled v-model="orderDetails.orderNumber"></el-input>
+          </div>
+        </el-col>
         </el-row>
         <el-row :gutter="60" class="baseInfo">
           <el-col :span="5">
@@ -423,7 +423,7 @@
         title="发货单"
         ref="print"
         :visible.sync="showPrintInfoDialog"
-        width="95%"
+        width="54.9%"
         class="printInfo"
       >
         <el-button class="no-print" @click="printWindow()">打印</el-button>
@@ -476,36 +476,36 @@
             type="index"
             :index="processingIndex"
             label="序号"
-            width="60"
+            width="50%"
           ></el-table-column>
 
-          <el-table-column prop="goodsName" label="产品名称" fixed width="221">
+          <el-table-column prop="goodsName" label="产品名称" fixed width="160%">
             <template v-slot="scope">
               {{ scope.row.goodsName }}
             </template>
           </el-table-column>
 
-          <el-table-column prop="goodsWidth" label="宽度 mm" width="80">
+          <el-table-column prop="goodsWidth" label="宽度 mm" width="50%">
             <template v-slot="scope">
               {{ scope.row.goodsWidth }}
             </template>
           </el-table-column>
-          <el-table-column prop="goodsLength" label="长度 mm" width="80">
+          <el-table-column prop="goodsLength" label="长度 mm" width="50%">
             <template v-slot="scope">
               {{ scope.row.goodsLength }}
             </template>
           </el-table-column>
-          <el-table-column prop="total" label="数量" width="80">
+          <el-table-column prop="total" label="数量" width="50%">
             <template v-slot="scope">
               {{ scope.row.total }}
             </template>
           </el-table-column>
-          <el-table-column prop="area" label="面积(m²)" width="100">
+          <el-table-column prop="area" label="面积(m²)" width="50%">
             <template v-slot="scope">
               {{ scope.row.area }}
             </template>
           </el-table-column>
-          <el-table-column prop="goodsPrice" label="单价" width="80">
+          <el-table-column prop="goodsPrice" label="单价" width="50%">
             <template v-slot="scope">
               {{ scope.row.goodsPrice }}
             </template>
@@ -513,7 +513,7 @@
           <el-table-column
             prop="processingRequirements"
             label="加工需求"
-            width="230"
+            width="100"
           >
             <template v-slot="scope">
               {{ scope.row.processingRequirements }}
@@ -522,18 +522,18 @@
           <el-table-column
             prop="processingExpenses"
             label="加工费用"
-            width="100"
+            width="66%"
           >
             <template v-slot="scope">
               {{ scope.row.processingExpenses }}
             </template>
           </el-table-column>
-          <el-table-column prop="totalMoney" label="总金额" width="100">
+          <el-table-column prop="totalMoney" label="总金额" width="66%">
             <template v-slot="scope">
               {{ scope.row.totalMoney }}
             </template>
           </el-table-column>
-          <el-table-column prop="remark" label="备注" width="230">
+          <el-table-column prop="remark" label="备注" width="160%">
             <template v-slot="scope">
               {{ scope.row.remark }}
             </template>
@@ -541,7 +541,7 @@
           <el-table-column
             prop="productionProcess"
             label="生产流程"
-            width="230"
+            width="160%"
           >
             <template v-slot="scope">
               {{ scope.row.productionProcess }}
@@ -849,10 +849,13 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@import "../../src/utils/print.css";
 .orderInquiry {
   span {
     white-space: nowrap;
   }
+
+
 
   /deep/ .el-card__body {
     padding-top: 0 !important;
@@ -1209,8 +1212,10 @@ export default {
 }
 
 .printInfo {
-  left: 10.4%;
-  top: -3.4%;
+  // left: 10.4%;
+  // top: -3.4%;
+
+
 
   /deep/ .el-dialog__body {
     .order_tit {
@@ -1252,17 +1257,18 @@ export default {
 
     .invoiceTable {
       border: 1px solid#000;
-
       thead th {
         background-color: #f0f0f0;
         border-color: #000;
         color: #000;
         padding: 2px 0 !important;
         text-align: center;
+        font-size: 12px;
       }
 
       tbody td {
         padding: 2px 0 !important;
+        font-size: 12px;
         border-color: #000;
         color: #000;
       }
