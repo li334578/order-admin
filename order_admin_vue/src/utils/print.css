@@ -3,6 +3,9 @@
  .el-dialog {
     width: 100%!important;
   }
+ .el-dialog__header {
+  display: none;
+ }
  
     /* section{
         margin-top: -35px;
