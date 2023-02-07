@@ -709,8 +709,6 @@ export default {
           arr.push(order);
         }
         this.orderList = arr;
-        // 合计
-        this.orderList.push()
         this.total = res.obj.total;
       });
       this.$message.success("获取订单列表成功！");
@@ -1257,6 +1255,10 @@ export default {
 
     .invoiceTable {
       border: 1px solid#000;
+
+      .el-table__fixed {
+        height: 100%;
+      }
       thead th {
         background-color: #f0f0f0;
         border-color: #000;
