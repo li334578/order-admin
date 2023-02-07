@@ -105,12 +105,12 @@ export default {
           {
           id: 125,
           authName: "订单录入",
-          path: "HelloWorld"
+          path: "OrderEntry"
         },
         {
           id: 103,
           authName: "订单管理",
-          path: "categories"
+          path: "OrderManagement"
         },
           ]
         }
