@@ -474,6 +474,7 @@
           <el-table-column
             fixed
             type="index"
+            :index="processingIndex"
             label="序号"
             width="60"
           ></el-table-column>
@@ -689,7 +690,6 @@ export default {
     // 合并单元格
     arraySpanMethod({ rowIndex, columnIndex }) {
       const goodListlength = this.printDetails.goodsList.length;
-      console.log(goodListlength,"ksfldsfdsf",rowIndex);
           if (rowIndex  === goodListlength - 1) {
             if (columnIndex === 0) {
               return [1, 2];
@@ -840,6 +840,9 @@ export default {
     },
     printWindow() {
       this.$print(this.$refs.print);
+    },
+    processingIndex(index) {
+      return index + 1 === this.printDetails.goodsList.length ? "合计:" : index + 1;
     },
   },
 };

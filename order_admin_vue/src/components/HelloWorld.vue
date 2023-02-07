@@ -351,7 +351,6 @@ export default {
       this.orderInfo.goodsList = this.orderInfo.goodsList.filter(
         (item) => item.goodsName !== null
       );
-      console.log(this.orderInfo);
       this.$post("/order/add", this.orderInfo);
     },
     saveGoods(e, rowData, properties) {
