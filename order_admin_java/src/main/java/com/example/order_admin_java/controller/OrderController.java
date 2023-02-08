@@ -117,7 +117,7 @@ public class OrderController {
         return RespBean.success(order);
     }
 
-    @DeleteMapping("/del/{orderId}")
+    @PostMapping("/del/{orderId}")
     public RespBean<Void> deleteOrder(@PathVariable("orderId") Long orderId) {
         // 删除订单下的货物信息
         goodsService.removeByOrderId(orderId);
