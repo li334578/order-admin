@@ -6,7 +6,7 @@ import { Message } from 'element-ui' // element Toast的提示
 // import { MessageBox } from 'element-ui'
 // import { Loading } from 'element-ui'
 import Cookies from 'js-cookie'
-const hosturl = 'http://j6entq.natappfree.cc'
+const hosturl = 'http://localhost:8888'
 var timeoutflag = null
     // const hosturl = 'http://www.hainanqx.cn:8090/HNMajorApp-api'
     // 过滤请求
@@ -97,7 +97,7 @@ export function get(url, data = {}) {
             })
             .catch(error => {
                 // openLoading != 'open' ? openWin('clockV') : ''
-                console.log(error)
+                // console.log(error)
                 resolve(error)
                     // reject(error)
                     // console.log(error)
