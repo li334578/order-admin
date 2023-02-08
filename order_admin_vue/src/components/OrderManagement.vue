@@ -8,12 +8,12 @@
             <span>客户</span>
             <el-select v-model="queryInfo.customerId" clearable placeholder="">
               <el-option
-                v-for="customer in customerList"
-                :key="customer.id"
-                :label="
+                  v-for="customer in customerList"
+                  :key="customer.id"
+                  :label="
                   customer.customerName + '【' + customer.customerPhone + '】'
                 "
-                :value="customer.id"
+                  :value="customer.id"
               >
               </el-option>
             </el-select>
@@ -22,12 +22,12 @@
           <div class="timer">
             <span>订单日期</span>
             <el-date-picker
-              v-model="timeRangeCondition"
-              @change="buildTimeCondition"
-              type="daterange"
-              range-separator="至"
-              start-placeholder=""
-              end-placeholder=""
+                v-model="timeRangeCondition"
+                @change="buildTimeCondition"
+                type="daterange"
+                range-separator="至"
+                start-placeholder=""
+                end-placeholder=""
             >
             </el-date-picker>
           </div>
@@ -35,10 +35,10 @@
             <span>是否已付款</span>
             <el-select v-model="queryInfo.payStatus" clearable placeholder="">
               <el-option
-                v-for="item in options1"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                  v-for="item in options1"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
               ></el-option>
             </el-select>
           </div>
@@ -47,10 +47,10 @@
             <span>发货状态</span>
             <el-select v-model="queryInfo.sendStatus" clearable placeholder="">
               <el-option
-                v-for="item in options2"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                  v-for="item in options2"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
               >
               </el-option>
             </el-select>
@@ -76,36 +76,36 @@
       </el-row>
       <!-- table表格区域 -->
       <el-table :data="orderList" border stripe class="tableColumn">
-        <el-table-column type="selection" width="55"> </el-table-column>
+        <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column label="序号" type="index" width="55"></el-table-column>
         <el-table-column label="客户" prop="customerName"></el-table-column>
         <el-table-column label="制单人" prop="customerName"></el-table-column>
         <el-table-column
-          label="订单日期"
-          prop="createTime"
-          width="100"
+            label="订单日期"
+            prop="createTime"
+            width="100"
         ></el-table-column>
         <el-table-column label="金额" prop="money"></el-table-column>
         <el-table-column label="已收款" prop="receiveMoney"></el-table-column>
         <el-table-column label="总面积" prop="totalArea"></el-table-column>
         <el-table-column
-          label="备注"
-          prop="remark"
-          width="150"
+            label="备注"
+            prop="remark"
+            width="150"
         ></el-table-column>
         <el-table-column
-          label="订单号"
-          prop="orderNumber"
-          width="150"
+            label="订单号"
+            prop="orderNumber"
+            width="150"
         ></el-table-column>
         <el-table-column width="100px" label="是否已付款" prop="payStatus">
           <template v-slot="scope">
             <el-switch
-              v-model="scope.row.payStatus"
-              :width="80"
-              active-text="已付款"
-              inactive-text="未付款"
-              @change="updateOrder(scope.row)"
+                v-model="scope.row.payStatus"
+                :width="80"
+                active-text="已付款"
+                inactive-text="未付款"
+                @change="updateOrder(scope.row)"
             >
             </el-switch>
           </template>
@@ -113,11 +113,11 @@
         <el-table-column width="100px" label="发货状态" prop="sendStatus">
           <template v-slot="scope">
             <el-switch
-              v-model="scope.row.sendStatus"
-              :width="80"
-              active-text="已发货"
-              inactive-text="未发货"
-              @change="updateOrder(scope.row)"
+                v-model="scope.row.sendStatus"
+                :width="80"
+                active-text="已发货"
+                inactive-text="未发货"
+                @change="updateOrder(scope.row)"
             >
             </el-switch>
           </template>
@@ -130,19 +130,22 @@
         <el-table-column label="操作" width="340px" class="scopeBtn">
           <template v-slot="scope">
             <el-button
-              type="primary"
-              size="mini"
-              @click="showDetailInfo(scope.row)"
-              >查看/修改</el-button
+                type="primary"
+                size="mini"
+                @click="showDetailInfo(scope.row)"
+            >查看/修改
+            </el-button
             >
             <el-button size="mini" @click="showPrintInfo(scope.row)"
-              >打印发布单</el-button
+            >打印发布单
+            </el-button
             >
             <el-button
-              type="danger"
-              size="mini"
-              @click="removeOrderById(scope.row.id)"
-              >删除</el-button
+                type="danger"
+                size="mini"
+                @click="removeOrderById(scope.row.id)"
+            >删除
+            </el-button
             >
           </template>
         </el-table-column>
@@ -150,23 +153,23 @@
 
       <!-- 分页区域 -->
       <el-pagination
-        class="pagination"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="queryInfo.current"
-        :page-sizes="[5, 10, 15, 20]"
-        :page-size="queryInfo.size"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="total"
-        background
+          class="pagination"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="queryInfo.current"
+          :page-sizes="[5, 10, 15, 20]"
+          :page-size="queryInfo.size"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="total"
+          background
       >
       </el-pagination>
       <!-- Table -->
       <el-dialog
-        title="订单信息"
-        :visible.sync="showOrderInfoDialog"
-        width="98%"
-        class="orderDetail"
+          title="订单信息"
+          :visible.sync="showOrderInfoDialog"
+          width="98%"
+          class="orderDetail"
       >
         <div class="order_tit">基础信息</div>
         <el-row :gutter="60" class="baseInfo">
@@ -198,9 +201,9 @@
             <div class="grid-content bg-purple">
               <span>订单日期</span>
               <el-date-picker
-                v-model="orderDetails.createTime"
-                type="date"
-                placeholder="选择日期"
+                  v-model="orderDetails.createTime"
+                  type="date"
+                  placeholder="选择日期"
               >
               </el-date-picker>
             </div>
@@ -232,11 +235,11 @@
             </div>
           </el-col>
           <el-col :span="4">
-          <div class="grid-content bg-purple">
-            <span>订单号</span>
-            <el-input disabled v-model="orderDetails.orderNumber"></el-input>
-          </div>
-        </el-col>
+            <div class="grid-content bg-purple">
+              <span>订单号</span>
+              <el-input disabled v-model="orderDetails.orderNumber"></el-input>
+            </div>
+          </el-col>
         </el-row>
         <el-row :gutter="60" class="baseInfo">
           <el-col :span="5">
@@ -244,10 +247,10 @@
               <span>是否已付款</span>
               <el-select v-model="orderDetails.payStatus" placeholder="请选择">
                 <el-option
-                  v-for="item in options1"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
+                    v-for="item in options1"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
                 >
                 </el-option>
               </el-select>
@@ -258,10 +261,10 @@
               <span>发货状态</span>
               <el-select v-model="orderDetails.sendStatus" placeholder="请选择">
                 <el-option
-                  v-for="item in options2"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
+                    v-for="item in options2"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
                 >
                 </el-option>
               </el-select>
@@ -270,138 +273,138 @@
         </el-row>
         <div class="order_tit">货物信息</div>
         <el-table
-          :data="orderDetails.goodsList"
-          border
-          stripe
-          style="width: 100%"
-          row-key="fid"
+            :data="orderDetails.goodsList"
+            border
+            stripe
+            style="width: 100%"
+            row-key="fid"
         >
-          <el-table-column fixed type="index"> </el-table-column>
+          <el-table-column fixed type="index"></el-table-column>
 
           <el-table-column prop="goodsName" label="产品名称" fixed width="200">
             <template v-slot="scope">
               <el-input
-                size="small"
-                :value="scope.row.goodsName"
-                @input="saveGoods($event, scope.row, 'goodsName')"
+                  size="small"
+                  :value="scope.row.goodsName"
+                  @input="saveGoods($event, scope.row, 'goodsName')"
               />
             </template>
           </el-table-column>
 
           <el-table-column
-            prop="goodsWidth"
-            sortable
-            label="宽度 mm"
-            width="160"
+              prop="goodsWidth"
+              sortable
+              label="宽度 mm"
+              width="160"
           >
             <template v-slot="scope">
               <el-input-number
-                size="small"
-                v-model="scope.row.goodsWidth"
-                @change="saveGoods($event, scope.row, 'goodsWidth')"
+                  size="small"
+                  v-model="scope.row.goodsWidth"
+                  @change="saveGoods($event, scope.row, 'goodsWidth')"
               />
             </template>
           </el-table-column>
           <el-table-column prop="goodsLength" label="长度 mm" width="160">
             <template v-slot="scope">
               <el-input-number
-                size="small"
-                v-model="scope.row.goodsLength"
-                @change="saveGoods($event, scope.row, 'goodsLength')"
+                  size="small"
+                  v-model="scope.row.goodsLength"
+                  @change="saveGoods($event, scope.row, 'goodsLength')"
               />
             </template>
           </el-table-column>
           <el-table-column prop="total" label="数量" width="140">
             <template v-slot="scope">
               <el-input
-                size="small"
-                :value="scope.row.total"
-                @input="saveGoods($event, scope.row, 'total')"
+                  size="small"
+                  :value="scope.row.total"
+                  @input="saveGoods($event, scope.row, 'total')"
               />
             </template>
           </el-table-column>
           <el-table-column prop="area" sortable label="面积(m²)" width="160">
             <template v-slot="scope">
               <el-input-number
-                size="small"
-                v-model="scope.row.area"
-                @change="saveGoods($event, scope.row, 'area')"
+                  size="small"
+                  v-model="scope.row.area"
+                  @change="saveGoods($event, scope.row, 'area')"
               />
             </template>
           </el-table-column>
           <el-table-column prop="goodsPrice" label="单价" width="160">
             <template v-slot="scope">
               <el-input-number
-                size="small"
-                v-model="scope.row.goodsPrice"
-                @change="saveGoods($event, scope.row, 'goodsPrice')"
+                  size="small"
+                  v-model="scope.row.goodsPrice"
+                  @change="saveGoods($event, scope.row, 'goodsPrice')"
               />
             </template>
           </el-table-column>
           <el-table-column
-            prop="processingRequirements"
-            label="加工需求"
-            width="210"
+              prop="processingRequirements"
+              label="加工需求"
+              width="210"
           >
             <template v-slot="scope">
               <el-input
-                size="small"
-                v-model="scope.row.processingRequirements"
-                @input="saveGoods($event, scope.row, 'processingRequirements')"
+                  size="small"
+                  v-model="scope.row.processingRequirements"
+                  @input="saveGoods($event, scope.row, 'processingRequirements')"
               />
             </template>
           </el-table-column>
           <el-table-column
-            prop="processingExpenses"
-            label="加工费用"
-            width="160"
+              prop="processingExpenses"
+              label="加工费用"
+              width="160"
           >
             <template v-slot="scope">
               <el-input-number
-                size="small"
-                v-model="scope.row.processingExpenses"
-                @change="saveGoods($event, scope.row, 'processingExpenses')"
+                  size="small"
+                  v-model="scope.row.processingExpenses"
+                  @change="saveGoods($event, scope.row, 'processingExpenses')"
               />
             </template>
           </el-table-column>
           <el-table-column prop="totalMoney" label="总金额" width="160">
             <template v-slot="scope">
               <el-input-number
-                size="small"
-                v-model="scope.row.totalMoney"
-                @change="saveGoods($event, scope.row, 'totalMoney')"
+                  size="small"
+                  v-model="scope.row.totalMoney"
+                  @change="saveGoods($event, scope.row, 'totalMoney')"
               />
             </template>
           </el-table-column>
           <el-table-column prop="remark" label="备注" width="220">
             <template v-slot="scope">
               <el-input
-                size="small"
-                :value="scope.row.remark"
-                @input="saveGoods($event, scope.row, 'remark')"
+                  size="small"
+                  :value="scope.row.remark"
+                  @input="saveGoods($event, scope.row, 'remark')"
               />
             </template>
           </el-table-column>
           <el-table-column
-            prop="productionProcess"
-            label="生产流程"
-            width="220"
+              prop="productionProcess"
+              label="生产流程"
+              width="220"
           >
             <template v-slot="scope">
               <el-input
-                size="small"
-                :value="scope.row.productionProcess"
-                @input="saveGoods($event, scope.row, 'productionProcess')"
+                  size="small"
+                  :value="scope.row.productionProcess"
+                  @input="saveGoods($event, scope.row, 'productionProcess')"
               />
             </template>
           </el-table-column>
           <el-table-column fixed="right" label="操作" width="80">
             <template v-slot="scope">
               <el-button
-                size="mini"
-                type="danger"
-                @click="handleDelete(scope.$index, scope.row)"
-                >删除
+                  size="mini"
+                  type="danger"
+                  @click="handleDelete(scope.$index, scope.row)"
+              >删除
               </el-button>
             </template>
           </el-table-column>
@@ -414,17 +417,18 @@
             <el-button @click="addRow(50)">加五十行</el-button>
           </div>
           <el-button type="primary" @click="updateOrder(orderDetails)"
-            >保存订单</el-button
+          >保存订单
+          </el-button
           >
         </div>
       </el-dialog>
 
       <el-dialog
-        title="发货单"
-        ref="print"
-        :visible.sync="showPrintInfoDialog"
-        width="54.9%"
-        class="printInfo"
+          title="发货单"
+          ref="print"
+          :visible.sync="showPrintInfoDialog"
+          width="54.9%"
+          class="printInfo"
       >
         <el-button class="no-print" @click="printWindow()">打印</el-button>
         <div class="order_tit">发货单</div>
@@ -465,18 +469,18 @@
           </el-row>
         </div>
         <el-table
-          :data="printDetails.goodsList"
-          border
-          style="width: 100%"
-          class="invoiceTable"
-          :span-method="arraySpanMethod"
+            :data="printDetails.goodsList"
+            border
+            style="width: 100%"
+            class="invoiceTable"
+            :span-method="arraySpanMethod"
         >
           <el-table-column
-            fixed
-            type="index"
-            :index="processingIndex"
-            label="序号"
-            width="50%"
+              fixed
+              type="index"
+              :index="processingIndex"
+              label="序号"
+              width="50%"
           ></el-table-column>
 
           <el-table-column prop="goodsName" label="产品名称" fixed width="160%">
@@ -511,18 +515,18 @@
             </template>
           </el-table-column>
           <el-table-column
-            prop="processingRequirements"
-            label="加工需求"
-            width="100"
+              prop="processingRequirements"
+              label="加工需求"
+              width="100"
           >
             <template v-slot="scope">
               {{ scope.row.processingRequirements }}
             </template>
           </el-table-column>
           <el-table-column
-            prop="processingExpenses"
-            label="加工费用"
-            width="66%"
+              prop="processingExpenses"
+              label="加工费用"
+              width="66%"
           >
             <template v-slot="scope">
               {{ scope.row.processingExpenses }}
@@ -539,23 +543,23 @@
             </template>
           </el-table-column>
           <el-table-column
-            prop="productionProcess"
-            label="生产流程"
-            width="160%"
+              prop="productionProcess"
+              label="生产流程"
+              width="160%"
           >
             <template v-slot="scope">
               {{ scope.row.productionProcess }}
             </template>
           </el-table-column>
         </el-table>
-        <el-row :gutter="20" class="sign"> 
-        <el-col :span="16">
-          <div class="grid-content bg-purple">制单人:{{this.printDetails.createUserName}}</div>
-        </el-col>
-        <el-col :span="8">
-          <div class="grid-content bg-purple">客户签字:</div>
-        </el-col>
-      </el-row>
+        <el-row :gutter="20" class="sign">
+          <el-col :span="16">
+            <div class="grid-content bg-purple">制单人:{{ this.printDetails.createUserName }}</div>
+          </el-col>
+          <el-col :span="8">
+            <div class="grid-content bg-purple">客户签字:</div>
+          </el-col>
+        </el-row>
       </el-dialog>
     </el-card>
   </div>
@@ -608,7 +612,7 @@ export default {
       orderDetails: {
         goodsList: [],
       },
-      printDetails:{
+      printDetails: {
         goodsList: [],
       }
     };
@@ -668,7 +672,7 @@ export default {
       }
       return 0;
     },
-    goodsListProcessingExpenses(){
+    goodsListProcessingExpenses() {
       if (this.printDetails.goodsList) {
         let result = 0;
         this.printDetails.goodsList.forEach((item) => {
@@ -679,7 +683,8 @@ export default {
       return 0;
     },
   },
-  mounted() {},
+  mounted() {
+  },
   methods: {
     getCustomerList() {
       // 写get请求
@@ -688,16 +693,16 @@ export default {
       });
     },
     // 合并单元格
-    arraySpanMethod({ rowIndex, columnIndex }) {
+    arraySpanMethod({rowIndex, columnIndex}) {
       const goodListlength = this.printDetails.goodsList.length;
-          if (rowIndex  === goodListlength - 1) {
-            if (columnIndex === 0) {
-              return [1, 2];
-            } else if (columnIndex === 1) {
-              return [0, 0];
-            }
-          }
-        },
+      if (rowIndex === goodListlength - 1) {
+        if (columnIndex === 0) {
+          return [1, 2];
+        } else if (columnIndex === 1) {
+          return [0, 0];
+        }
+      }
+    },
     // 根据分页获取对应的商品列表
     async getOrderList() {
       await this.$post("/order/list", this.queryInfo).then((res) => {
@@ -737,27 +742,25 @@ export default {
     },
     async removeOrderById(id) {
       const confirmResult = await this.$confirm(
-        "此操作将永久删除该订单, 是否继续?",
-        "提示",
-        {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning",
-        }
+          "此操作将永久删除该订单, 是否继续?",
+          "提示",
+          {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning",
+          }
       ).catch((err) => err);
-
       if (confirmResult !== "confirm") {
         return this.$message.info("已经取消删除！");
       }
-
-      const { data: res } = await this.$delete(`/order/del/${id}`);
-
-      if (res.meta.status !== 1) {
-        return this.$message.error("删除失败！");
-      }
-
-      this.$message.success("删除成功！");
-      this.getOrderList();
+      this.$post(`/order/del/${id}`).then((res) => {
+        if (res.code !== 1) {
+          return this.$message.error("删除失败！");
+        } else {
+          this.$message.success("删除成功！");
+        }
+        this.getOrderList();
+      })
     },
     showDetailInfo(data) {
       this.$get("/order/detail", {
@@ -779,7 +782,7 @@ export default {
         // 弹框
         this.showPrintInfoDialog = true;
         this.printDetails = res.obj;
-        if (this.printDetails.goodsList){
+        if (this.printDetails.goodsList) {
           this.printDetails.goodsList.push({
             goodsName: null,
             goodsWidth: null,
@@ -800,22 +803,22 @@ export default {
       this.$forceUpdate();
       this.$nextTick(() => {
         this.orderDetails.goodsList.find((item) => item.fid === rowData.fid)[
-          properties
-        ] = e;
+            properties
+            ] = e;
       });
     },
     handleDelete(index, data) {
       this.orderDetails.goodsList.splice(index, 1);
       let arr = this.orderDetails.delGoodsIdList
-        ? this.orderDetails.delGoodsIdList
-        : [];
+          ? this.orderDetails.delGoodsIdList
+          : [];
       arr.push(data.id);
       this.orderDetails.delGoodsIdList = arr;
     },
     addRow(num) {
       let maxFid = Math.max.apply(
-        Math,
-        this.orderInfo.goodsList.map((item) => item.fid)
+          Math,
+          this.orderInfo.goodsList.map((item) => item.fid)
       );
       for (let i = 1; i <= num; i++) {
         maxFid++;
@@ -848,11 +851,11 @@ export default {
 
 <style lang="less" scoped>
 @import "../../src/utils/print.css";
+
 .orderInquiry {
   span {
     white-space: nowrap;
   }
-
 
 
   /deep/ .el-card__body {
@@ -1034,18 +1037,21 @@ export default {
         }
 
         /*打开时文字位置设置*/
+
         .el-switch__label--right {
           z-index: 1;
           right: 10px;
         }
 
         /*关闭时文字位置设置*/
+
         .el-switch__label--left {
           z-index: 1;
           // left: 20px;
         }
 
         /*显示文字*/
+
         .el-switch__label.is-active {
           display: block;
         }
@@ -1213,9 +1219,9 @@ export default {
   // left: 10.4%;
   // top: -3.4%;
 
-  /deep/  .el-table__fixed {
-        height: 100%!important;
-      }
+  /deep/ .el-table__fixed {
+    height: 100% !important;
+  }
 
   /deep/ .el-dialog__body {
 
@@ -1258,7 +1264,7 @@ export default {
     }
 
     .invoiceTable {
-      border: 1px solid#000;
+      border: 1px solid #000;
 
       .el-table__body-wrapper {
         overflow-x: hidden;
@@ -1287,6 +1293,7 @@ export default {
 
     .sign {
       margin-top: 20px;
+
       .el-col {
         text-align: left;
         color: #000;
