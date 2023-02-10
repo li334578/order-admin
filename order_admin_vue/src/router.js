@@ -3,8 +3,6 @@ import Router from 'vue-router'
 
 const Home = () => import('./components/Home.vue')
 const Welcome = () => import('./components/Welcome.vue')
-const OrderEntry = () => import('./components/OrderEntry.vue')
-const OrderManagement = () => import( './components/OrderManagement.vue')
 
 Vue.use(Router)
 
@@ -16,9 +14,7 @@ const router = new Router({
       component: Home,
       redirect: '/welcome',
       children: [
-        { path: '/welcome', component: Welcome },
-        { path: '/OrderEntry', component: OrderEntry },
-        { path: '/OrderManagement', component: OrderManagement },
+        { path: '/welcome', component: Welcome }
       ]
     }
   ]
